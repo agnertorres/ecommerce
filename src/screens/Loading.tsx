@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 
 export default function Loading() {
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#c3c3c3" />
-      <Text style={styles.title}>Loading...</Text>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#c3c3c3" />
+      <Text style={styles.title}>Carregando...</Text>
      </View>
    );
 }

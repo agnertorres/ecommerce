@@ -32,12 +32,12 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Acesso</Text>
         <TextInput
           value={email}
           onChangeText={setEmail}
           style={styles.input}
-          placeholder="Email"
+          placeholder="E-mail"
           autoCapitalize="none"
           keyboardType="email-address"
           autoComplete="email"
@@ -47,7 +47,7 @@ export default function Login() {
           value={password}
           onChangeText={setPassword}
           style={styles.input}
-          placeholder="Password"
+          placeholder="Senha"
           secureTextEntry
       />
       <TouchableOpacity
@@ -56,7 +56,7 @@ export default function Login() {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? <ActivityIndicator size="small" color="#fff" /> : 'Login'}
+          {loading ? <ActivityIndicator size="small" color="#fff" /> : 'Entrar'}
         </Text>
       </TouchableOpacity>
     </View>

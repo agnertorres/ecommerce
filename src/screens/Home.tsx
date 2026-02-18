@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
+import ScreenSafeWrapper from '../components/Utils/ScreenSafeWrapper';
 
 export default function Home() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
+    <ScreenSafeWrapper>
+      <View style={styles.container}>
+        <Text style={styles.title}>Home</Text>
      </View>
+    </ScreenSafeWrapper>
    );
 }
 
@@ -13,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
