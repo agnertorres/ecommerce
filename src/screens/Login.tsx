@@ -3,14 +3,9 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { signIn } from '../store/slices/authSlice';
+import { setUserData } from '../store/slices/userSlice';
 
-const getToken = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('token');
-    }, 1000);
-  });
-};
+import { getToken, getUserData } from '../services/user';
 
 export default function Login() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,13 +16,21 @@ export default function Login() {
 
   const handleSignin = async () => {
     if (!email || !password) {
-      Alert.alert('Please enter both email and password');
+      Alert.alert('Informe o e-mail e senha');
       return;
-    }
+    }   
     setLoading(true);
-    const token = await getToken();
-    dispatch(signIn({ token }));
-    setLoading(false);
+    
+    try {
+      const token = await getToken();
+      const userData = await getUserData(token);
+      dispatch(setUserData(userData));
+      dispatch(signIn({ token }));
+      setLoading(false);
+    } catch(e) {
+      Alert.alert('Não foi possível concluir');
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,12 +58,16 @@ export default function Login() {
         onPress={handleSignin}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>
-          {loading ? <ActivityIndicator size="small" color="#fff" /> : 'Entrar'}
-        </Text>
+        <SubmitButtonContent loading={loading}/>
       </TouchableOpacity>
     </View>
   );
+}
+
+function SubmitButtonContent({ loading }: { loading: boolean}) {
+  if (loading) return <ActivityIndicator size="small" color="#fff" />
+
+  return <Text style={styles.buttonText}>Entrar</Text>
 }
 
 const styles = StyleSheet.create({
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
     input: {
     width: '80%',
@@ -82,6 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 10,
+    maxWidth: 500
   },
     button: {
     width: '80%',
@@ -91,11 +99,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+    maxWidth: 500
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   error: {
     color: 'red',

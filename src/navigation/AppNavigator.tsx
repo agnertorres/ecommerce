@@ -8,14 +8,8 @@ import { AppStack } from './AppStack';
 import Loading from '../screens/Loading';
 
 import { restoreToken } from '../store/slices/authSlice';
-
-const getToken = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('fake-token');
-    }, 1000);
-  });
-};
+import { setUserData } from '../store/slices/userSlice';
+import { getUserData, getToken } from '../services/user';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,9 +20,12 @@ export function AppNavigator() {
   useEffect(() => {
     const bootstrapAsync = async () => {
       let userToken;
+      let userData;
 
       try {
         userToken = await getToken();
+        userData = await getUserData(userToken);
+        dispatch(setUserData(userData));
       } catch (e) {
         console.error('Failed to restore token', e);
       }

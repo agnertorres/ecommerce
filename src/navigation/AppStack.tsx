@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Home, User, ShoppingCart } from 'lucide-react-native';
+import { Home, User, ShoppingCart, ShoppingBag } from 'lucide-react-native';
 
 import ProfileScreen from '../screens/Profile';
 import HomeScreen from '../screens/Home';
 import ShoppingCartScreen from '../screens/ShoppingCart';
+import OrdersScreen from '../screens/Orders';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ export function AppStack() {
           tabBarLabel: 'Início',
         }}
       />
-       <Tab.Screen
+      <Tab.Screen
         name="ShoppingCart"
         component={ShoppingCartScreen}
         options={{
@@ -40,6 +41,19 @@ export function AppStack() {
           tabBarBadge: 1,
           headerShown: false,
           tabBarLabel: 'Carrinho',
+        }}
+      />
+      <Tab.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={{
+          tabBarIcon: ({ color, size, }) => (
+            <ShoppingBag color={color} size={size} strokeWidth={1.5} />
+          ),
+          headerTitle: 'Minhas compras',
+          tabBarLabel: 'Minhas compras',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007BFF'}
         }}
       />
       <Tab.Screen

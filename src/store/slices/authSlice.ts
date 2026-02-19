@@ -33,7 +33,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     },
   },
-})
+});
 
-export const { signIn, signOut, restoreToken, isLoading } = authSlice.actions
-export default authSlice.reducer
+export const { signIn, signOut, restoreToken, isLoading } = authSlice.actions;
+export default authSlice.reducer;
