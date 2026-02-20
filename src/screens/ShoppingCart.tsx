@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import ScreenSafeWrapper from '../components/Utils/ScreenSafeWrapper';
 
-export default function ShoppingCart() {
+export default function ShoppingCartScreen() {
 
   return (
     <ScreenSafeWrapper>

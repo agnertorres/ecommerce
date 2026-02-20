@@ -22,12 +22,14 @@ export const getUserOrders = createAsyncThunk<Order[],void,{ state: RootState }>
 interface OrderSlice {
   items: Order[];
   loading: boolean;
+  refreshing: boolean;
   error: string | null;
 }
 
 const initialState: OrderSlice = {
   items: [],
   loading: false,
+  refreshing: false,
   error: null,
 };
 
@@ -38,15 +40,20 @@ const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserOrders.pending, (state) => {
-        state.loading = true;
+        state.items.length === 0
+          ? state.loading = true
+          : state.refreshing = true;
+
         state.error = null;
       })
       .addCase(getUserOrders.fulfilled, (state, action: PayloadAction<Order[]>) => {
         state.loading = false;
+        state.refreshing = false;
         state.items = action.payload;
       })
       .addCase(getUserOrders.rejected, (state, action) => {
         state.loading = false;
+        state.refreshing = false;
         state.error = action.payload as string || 'Erro ao carregar pedidos';
       });
   },

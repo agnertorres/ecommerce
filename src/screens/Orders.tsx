@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	View,
 	FlatList,
+  SectionList,
   ActivityIndicator,
 } from 'react-native';
 
@@ -13,9 +14,9 @@ import { getUserOrders } from '../store/slices/orderSlice';
 
 import OrderCard from '../components/Order/OrderCard';
 
-export default function Orders() {
+export default function OrdersScreen() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items, loading } = useSelector((state: RootState) => state.order);
+  const { items, loading, refreshing } = useSelector((state: RootState) => state.order);
   
   useEffect(() => {
     dispatch(getUserOrders());
@@ -32,6 +33,8 @@ export default function Orders() {
   return (
     <View style={styles.container}>
       <FlatList
+        onRefresh={() => { dispatch(getUserOrders()) }}
+        refreshing={refreshing}
         data={items}
         renderItem={({ item }) => <OrderCard { ...item} />}
         keyExtractor={item => item.id.toString()}

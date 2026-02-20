@@ -8,7 +8,7 @@ import Modal from '../components/Profile/Modal';
 import PersonalInformation from '../components/Profile/PersonalInformation';
 import AccountData from '../components/Profile/AccountData';
 
-export default function Profile() {
+export default function ProfileScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const safeAreaInsets = useSafeAreaInsets();
   

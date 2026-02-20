@@ -16,6 +16,7 @@ export default function ProductList({ products }: ProductListProps) {
 			<View key={item.id} style={styles.itemContainer}>
 				<Image style={styles.itemImage} src={item.image} height={70} width={70} />
 				<View style={styles.itemDescription}>
+					<Text style={{ fontWeight: '600' }}>Produto ID: {item.id}</Text>
 					<Text style={styles.itemStatus}>{item.status}</Text>
 					<Text>Quantidade: {item.quantity}</Text>
 				</View>
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
 		borderColor: '#ccc',
 		borderRadius: 3,
 	},
-	itemDescription:{
+	itemDescription: {
 		display: 'flex',
 		flexDirection: 'column',
 		gap: 2,

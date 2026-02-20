@@ -13,11 +13,26 @@ export interface Product {
 	status: string;
 	image: string;
 	quantity: number;
+	price: number;
+}
+
+export interface Shipping {
+	address: string;
+	city: string;
+	price: number;
 }
 
 export interface Order {
 	id: number;
 	date: string;
-	paymentFormat: string;
+	paymentMethod: string;
+	paymentStatus: string;
+	shipping: Shipping;
 	products: Product[];
+	totalPrice: number;
 }
+
+export type OrderStackParamList = {
+	OrdersList: undefined;
+	OrderDetail: { id: number };
+};

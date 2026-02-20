@@ -7,7 +7,7 @@ import { setUserData } from '../store/slices/userSlice';
 
 import { getToken, getUserData } from '../services/user';
 
-export default function Login() {
+export default function LoginScreen() {
   const dispatch = useDispatch<AppDispatch>();
 
   const [email, setEmail] = useState('');
