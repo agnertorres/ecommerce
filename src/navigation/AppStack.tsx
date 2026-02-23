@@ -6,7 +6,8 @@ import ProfileScreen from '../screens/Profile';
 import HomeScreen from '../screens/Home';
 import ShoppingCartScreen from '../screens/ShoppingCart';
 
-import OrdersStack from '../navigation/OrdersStack';
+import OrdersStack from './OrdersStack';
+import ProfileStack from './ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,8 +57,8 @@ export function AppStack() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="MyAccount"
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <User color={color} size={size} strokeWidth={1.5} />

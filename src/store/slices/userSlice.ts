@@ -16,8 +16,8 @@ const userSlice = createSlice({
   reducers: {
     setUserData: (state, action: PayloadAction<User>) => {
         state.data = action.payload;
-    } 
-  },
+    }
+  }
 });
 
 export const { setUserData } = userSlice.actions;

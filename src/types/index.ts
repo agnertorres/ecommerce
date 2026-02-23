@@ -36,3 +36,12 @@ export type OrderStackParamList = {
 	OrdersList: undefined;
 	OrderDetail: { id: number };
 };
+
+export type ProfileStackParamList = {
+	Profile: undefined;
+	EditProfile: {
+		field: keyof User,
+		value: string,
+	};
+	ChangePassword: undefined,
+};

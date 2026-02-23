@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { AppDispatch, RootState } from '../store';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -8,11 +9,28 @@ import Modal from '../components/Profile/Modal';
 import PersonalInformation from '../components/Profile/PersonalInformation';
 import AccountData from '../components/Profile/AccountData';
 
+interface editFieldProps { 
+	field: string;
+	value?: string;
+}
+
 export default function ProfileScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const safeAreaInsets = useSafeAreaInsets();
   
   const { data } = useSelector((state: RootState) => state.user);
+
+  const navigation = useNavigation();
+  
+  const editField = ({ field, value }: editFieldProps) => {
+
+    if (field === 'password') {
+      navigation.navigate('ChangePassword');
+      return;
+    }
+
+    navigation.navigate('EditProfile', { field, value });
+  }
 
   return (
     <View style={styles.container}>
@@ -26,8 +44,8 @@ export default function ProfileScreen() {
         <Text style={styles.headerSubtitle}>joaosilva@gmail.com</Text>
       </View>
       <ScrollView style={styles.content}>
-        <PersonalInformation user={data}/>
-        <AccountData user={data} />
+        <PersonalInformation user={data} editField={editField} />
+        <AccountData user={data} editField={editField} />
         <View>
           <TouchableOpacity style={styles.button} onPress={() => dispatch(showModal(true))}>
             <Text style={styles.buttonText}>Sair da conta</Text>

@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { Phone, Mail, KeyRound } from 'lucide-react-native';
-
 import { User } from '../../types';
+
+import { Phone, Mail, KeyRound } from 'lucide-react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import LinkButton from './LinkButton';
 
 interface AccountDataProps {
-    user: User | null;
+  user: User | null;
+  editField: () => void;
 }
 
-export default function AccountData({ user }: AccountDataProps) {
+export default function AccountData({ user, editField }: AccountDataProps) {
   return (
     <View>
       <Text style={styles.title}>Dados da conta</Text>
@@ -17,19 +18,25 @@ export default function AccountData({ user }: AccountDataProps) {
         iconComponent={<Mail size={30} strokeWidth={1} />}
         data={user?.email}
         description="E-mail cadastrado"
-        onPress={() => {}}
+        onPress={() => {
+          editField({ field: 'email', value: user?.email })
+        }}
       />
       <LinkButton
         iconComponent={<Phone size={30} strokeWidth={1} />}
         data={user?.phone}
         description="Número de telefone"
-        onPress={() => () => {}}
+        onPress={() => {
+          editField({ field: 'phone', value: user?.phone })
+        }}
       />
       <LinkButton
         iconComponent={<KeyRound size={30} strokeWidth={1} />}
         data="********"
         description="Alterar senha"
-        onPress={() => () => {}}
+        onPress={() => {
+          editField({ field: 'password' })
+        }}
       />
     </View>
   );
