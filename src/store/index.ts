@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice';
 import profileModalReducer from './slices/profileModalSlice';
 import userReducer from './slices/userSlice';
 import orderReducer from './slices/orderSlice';
+import productReducer from './slices/productSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     profileModal: profileModalReducer,
     user: userReducer,
     order: orderReducer,
+    product: productReducer,
   },
 })
 

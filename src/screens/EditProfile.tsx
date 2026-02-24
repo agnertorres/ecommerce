@@ -3,6 +3,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../types';
 import { useNavigation } from '@react-navigation/native';
 
+import { KeyboardTypeOptions } from 'react-native';
+
 import { editField } from '../services/user';
 import { User } from '../types';
 
@@ -18,6 +20,16 @@ const fieldNameMap: User = {
 	email: 'E-mail',
 	phone: 'Número de telefone',
 	password: 'Senha',
+};
+
+const keyboardType: User = {
+  name: 'default',
+	cpf: 'number-pad',
+	nickname: 'default',
+	address: 'default',
+	email: 'email-address',
+	phone: 'phone-pad',
+	password: 'default',
 };
 
 export default function EditProfileScreen({ route }: EditProfileProps) {
@@ -60,13 +72,7 @@ export default function EditProfileScreen({ route }: EditProfileProps) {
         style={styles.input}
         placeholder={fieldNameMap[field]}
         autoCapitalize="none"
-        keyboardType={
-          field === 'email'
-            ? 'email-address'
-            : field === 'phone'
-              ? 'phone-pad'
-              : 'default'
-        }
+        keyboardType={keyboardType[field] as KeyboardTypeOptions}
         maxLength={50}
         autoFocus={true}
         editable={!loading}

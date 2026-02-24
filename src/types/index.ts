@@ -10,10 +10,12 @@ export interface User {
 
 export interface Product {
 	id: number;
+	title: string;
 	status: string;
 	image: string;
 	quantity: number;
 	price: number;
+	category: CategoryEnum;
 }
 
 export interface Shipping {
@@ -33,15 +35,24 @@ export interface Order {
 }
 
 export type OrderStackParamList = {
-	OrdersList: undefined;
-	OrderDetail: { id: number };
+	OrdersList: undefined,
+	OrderDetail: { id: number },
 };
 
 export type ProfileStackParamList = {
-	Profile: undefined;
+	Profile: undefined,
 	EditProfile: {
 		field: keyof User,
 		value: string,
-	};
+	},
 	ChangePassword: undefined,
 };
+
+export enum CategoryEnum {
+	Eletrônicos = 'Eletrônicos',
+	Casa = 'Casa',
+	Esporte = 'Esporte',
+	Música = 'Música',
+	Moda = 'Moda',
+	Beleza = 'Beleza',
+}

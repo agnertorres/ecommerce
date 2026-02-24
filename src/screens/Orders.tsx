@@ -6,7 +6,6 @@ import {
 	StyleSheet,
 	View,
 	FlatList,
-  SectionList,
   ActivityIndicator,
 } from 'react-native';
 

@@ -42,7 +42,7 @@ export default function ChangePasswordScreen() {
 
 		Alert.alert('', 'Sua senha foi alterada com sucesso', [{
 			text: 'Fechar',
-			}],
+		}],
 			{
 				cancelable: false,
 			}
@@ -107,7 +107,7 @@ export default function ChangePasswordScreen() {
 	)
 }
 
-function SubmitButtonContent({ loading }: { loading: boolean}) {
+function SubmitButtonContent({ loading }: { loading: boolean }) {
 	if (loading) return <ActivityIndicator size="small" color="#fff" />
 
 	return <Text style={styles.buttonText}>Alterar</Text>
