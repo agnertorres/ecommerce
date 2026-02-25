@@ -18,7 +18,7 @@ export default function ProductList({ products }: ProductListProps) {
 				<View style={styles.itemDescription}>
 					<Text style={{ fontWeight: '600' }}>Produto ID: {item.id}</Text>
 					<Text style={styles.itemStatus}>{item.status}</Text>
-					<Text>Quantidade: {item.quantity}</Text>
+					<Text>Quantidade: {item.stock}</Text>
 				</View>
 			</View>
 		))

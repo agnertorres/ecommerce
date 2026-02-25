@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { RootState } from '../../store';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { MapPin, ChevronRight, ChevronLeft } from 'lucide-react-native';
+import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
+import { ChevronLeft } from 'lucide-react-native';
+
+import Address from '../Profile/Address';
 
 interface HeaderProps {
 	style: Object;
@@ -14,14 +14,8 @@ export default function Header({ style, showBackButton = false }: HeaderProps) {
 	const navigation = useNavigation();
 	const [searchInput, setSearchInput] = useState('');
 
-	const { data } = useSelector((state: RootState) => state.user);
-
 	const goBack = () => {
 		navigation.goBack();
-	}
-
-	const changeAddress = () => {
-		navigation.navigate('EditProfile', { field: 'address', value: data?.address });
 	}
 
 	return (
@@ -40,13 +34,7 @@ export default function Header({ style, showBackButton = false }: HeaderProps) {
 					onSubmitEditing={() => console.log('aaaaaa')}
 				/>
 			</View>
-			<TouchableOpacity style={styles.addressContainer} onPress={changeAddress}>
-				<View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-					<MapPin color={'#fff'} size={21} strokeWidth={1.4} />
-					<Text style={styles.addressText}>{data?.address}</Text>
-				</View>
-				<ChevronRight style={styles.chevronRight} color={'#fff'} size={21} strokeWidth={1.4} />
-			</TouchableOpacity>
+			<Address />
 		</View>
 	)
 }
@@ -86,7 +74,7 @@ const styles = StyleSheet.create({
 	},
 	input: {
     flexGrow: 1,
-    height: 40,
+    height: 32,
 		backgroundColor: '#fff',
     borderColor: '#ccc',
     borderWidth: 1,
@@ -94,19 +82,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     maxWidth: 500
   },
-	addressContainer: {
-		width: '100%',
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		paddingHorizontal: 15,
-	},
-	addressText: {
-		color: '#fff',
-		fontSize: 15,
-	},
-	chevronRight: {
-		alignSelf: 'flex-end',
-	},
 });

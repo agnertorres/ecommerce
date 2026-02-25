@@ -18,7 +18,7 @@ const cardStyle = StyleSheet.create({
 	card: {
 		padding: 15,
 		backgroundColor: '#fff',
-		borderRadius: 5,
+		borderRadius: 2,
 		shadowColor: '#2e2e2e',
 		shadowOffset: {
 			width: 0,

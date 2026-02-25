@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: '100%',
     aspectRatio: 1,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#f3f3f3',
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -1,18 +1,9 @@
 import { Order as OrderI } from '../../types';
-import {
-	Text,
-	View,
-	TouchableOpacity,
-	StyleSheet,
-	FlatList,
-	Image,
-	ScrollView
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { CreditCard, Truck } from 'lucide-react-native';
 
 import Card from '../ui/Card';
 import ProductList from './ProductList';
-
 
 type OrderDetailProps = {
 	order: OrderI;

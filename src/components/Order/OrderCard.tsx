@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 	orderContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: 'white',
+		backgroundColor: '#fff',
 		alignItems: 'center',
 		marginHorizontal: 20,
 		marginTop: 20,

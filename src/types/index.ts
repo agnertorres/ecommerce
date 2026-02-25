@@ -13,7 +13,7 @@ export interface Product {
 	title: string;
 	status: string;
 	image: string;
-	quantity: number;
+	stock: number;
 	price: number;
 	category: CategoryEnum;
 	shippingPrice: number;
@@ -33,6 +33,10 @@ export interface Order {
 	shipping: Shipping;
 	products: Product[];
 	totalPrice: number;
+}
+
+export interface Cartitem extends Product {
+	quantity: number;
 }
 
 export type OrderStackParamList = {

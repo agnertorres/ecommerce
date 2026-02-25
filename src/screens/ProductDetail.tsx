@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import { Product } from '../types';
 import { formatMoney } from '../utils';
 import {
@@ -13,6 +16,7 @@ import {
 } from 'react-native';
 
 import { getProductById } from '../services/product';
+import { addProduct } from '../store/slices/shoppingCartSlice';
 import Button from '../components/ui/Button';
 import Header from '../components/Home/Header';
 
@@ -67,63 +71,78 @@ export default function ProductDetailScreen({ route }) {
 }
 
 interface ProductDetailProps {
-  product: Product | null,
-  selectedQuantity: number,
-  setSelectedQuantity: React.Dispatch<React.SetStateAction<number>>
+  product: Product | null;
+  selectedQuantity: number;
+  setSelectedQuantity: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductDetail = ({ product, selectedQuantity, setSelectedQuantity }: ProductDetailProps) => (
-  <ScrollView contentContainerStyle={styles.container}>
-    <Text style={styles.title}>{product?.title}</Text>
-    <View style={styles.imageBackground}>
-      <Image
-        source={{ uri: product?.image }}
-        style={styles.image}
-        resizeMode="contain"
-      />
-    </View>
+const ProductDetail = ({ product, selectedQuantity, setSelectedQuantity }: ProductDetailProps) => {
+  const dispatch = useDispatch<AppDispatch>();
 
-    <View style={styles.priceContainer}>
-      <Text style={styles.price}>
-        {formatMoney(product?.price)}
-      </Text>
-      <Text style={styles.paymentInInstallments}>
-        10x {formatMoney((product?.price / 10))} sem juros
-      </Text>
-    </View>
+  const navigation = useNavigation();
 
-    <View style={styles.shippingContainer}>
-      {
-        product?.shippingPrice === 0
-          ? <Text style={{ color: '#00a71f' }}>Frete grátis</Text>
-          : <Text style={{ color: '#3f3f3f'}}>
-              Entrega: <Text style={{ fontWeight: 'bold' }}>{formatMoney(product?.shippingPrice)}</Text>
-            </Text>
-      }
-    </View>
+  const buyNow = () => {
+    dispatch(addProduct(product));
+    navigation.navigate('ShoppingCart');
+  }
 
-    <Text style={styles.stock}>Estoque disponível</Text>
-    <TouchableWithoutFeedback>
-      <View style={styles.quantityContainer}>
-        <Text>
-          Quantidade: <Text style={{ fontWeight: 'bold' }}>{selectedQuantity}</Text>
+  const addToCart = () => {
+    dispatch(addProduct(product));
+  }
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>{product?.title}</Text>
+      <View style={styles.imageBackground}>
+        <Image
+          source={{ uri: product?.image }}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
+
+      <View style={styles.priceContainer}>
+        <Text style={styles.price}>
+          {formatMoney(product?.price)}
         </Text>
-        <Text style={styles.quantity}>
-          {`(${product?.quantity} Disponível)`}
+        <Text style={styles.paymentInInstallments}>
+          10x {formatMoney((product?.price / 10))} sem juros
         </Text>
       </View>
-    </TouchableWithoutFeedback>
 
-    <View style={{display: 'flex', flexDirection:'column',  gap: 10, width: '100%', marginVertical: 15 }}>
-      <Button>
-        Comprar agora
-      </Button>
-      <Button backgroundColor={'#d3e8ff'} textColor={'#007BFF'}>
-        Adicionar ao carrinho
-      </Button>
-    </View>
-  </ScrollView>
-);
+      <View style={styles.shippingContainer}>
+        {
+          product?.shippingPrice === 0
+            ? <Text style={{ color: '#00a71f' }}>Frete grátis</Text>
+            : <Text style={{ color: '#3f3f3f'}}>
+                Entrega: <Text style={{ fontWeight: 'bold' }}>{formatMoney(product?.shippingPrice)}</Text>
+              </Text>
+        }
+      </View>
+
+      <Text style={styles.stock}>Estoque disponível</Text>
+      <TouchableWithoutFeedback>
+        <View style={styles.quantityContainer}>
+          <Text>
+            Quantidade: <Text style={{ fontWeight: 'bold' }}>{selectedQuantity}</Text>
+          </Text>
+          <Text style={styles.stock}>
+            {`(${product?.stock} Disponível)`}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
+
+      <View style={{display: 'flex', flexDirection:'column',  gap: 10, width: '100%', marginVertical: 15 }}>
+        <Button onPress={buyNow}>
+          Comprar agora
+        </Button>
+        <Button onPress={addToCart} backgroundColor={'#d3e8ff'} textColor={'#007BFF'}>
+          Adicionar ao carrinho
+        </Button>
+      </View>
+    </ScrollView>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -149,7 +168,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   priceContainer: {
-    marginBottom: 20,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -168,7 +186,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginBottom: 15,
+    marginVertical: 10,
   },
   stock: {
     width: '100%',
@@ -183,7 +201,7 @@ const styles = StyleSheet.create({
     padding: 15,
 		backgroundColor: '#f1f1f1',
 		borderRadius: 5,
-    marginVertical: 10,
+    marginTop: 5,
     gap: 5,
   },
   quantity: {
