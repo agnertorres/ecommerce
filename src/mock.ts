@@ -8,7 +8,8 @@ export const Products: Product[] =  [
     "price":9.99,
     "image":"https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
     "quantity":99,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 10,
   },
   {
     "id":2,
@@ -17,7 +18,8 @@ export const Products: Product[] =  [
     "price":19.99,
     "image":"https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp",
     "quantity":34,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 10,
   },
   {
     "id":3,
@@ -26,7 +28,8 @@ export const Products: Product[] =  [
     "price":14.99,
     "image":"https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp",
     "quantity":89,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 15,
   },
   {
     "id":4,
@@ -35,7 +38,8 @@ export const Products: Product[] =  [
     "price":12.99,
     "image":"https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp",
     "quantity":91,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 10,
   },
   {
     "id":5,
@@ -44,7 +48,8 @@ export const Products: Product[] =  [
     "price":8.99,
     "image":"https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp",
     "quantity":79,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":6,
@@ -53,7 +58,8 @@ export const Products: Product[] =  [
     "price":49.99,
     "image":"https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp",
     "quantity":29,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":7,
@@ -62,7 +68,8 @@ export const Products: Product[] =  [
     "price":129.99,
     "image":"https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/thumbnail.webp",
     "quantity":58,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":8,
@@ -71,7 +78,8 @@ export const Products: Product[] =  [
     "price":89.99,
     "image":"https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp",
     "quantity":98,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 5,
   },
   {
     "id":9,
@@ -80,7 +88,8 @@ export const Products: Product[] =  [
     "price":69.99,
     "image":"https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp",
     "quantity":4,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 12,
   },
   {
     "id":10,
@@ -89,7 +98,8 @@ export const Products: Product[] =  [
     "price":79.99,
     "image":"https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp",
     "quantity":91,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":11,
@@ -98,7 +108,8 @@ export const Products: Product[] =  [
     "price":1899.99,
     "image":"https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/thumbnail.webp",
     "quantity":88,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 22,
   },
   {
     "id":12,
@@ -107,7 +118,8 @@ export const Products: Product[] =  [
     "price":2499.99,
     "image":"https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/thumbnail.webp",
     "quantity":60,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":13,
@@ -116,7 +128,8 @@ export const Products: Product[] =  [
     "price":299.99,
     "image":"https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/thumbnail.webp",
     "quantity":64,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 10,
   },
   {
     "id":14,
@@ -125,7 +138,8 @@ export const Products: Product[] =  [
     "price":499.99,
     "image":"https://cdn.dummyjson.com/product-images/furniture/knoll-saarinen-executive-conference-chair/thumbnail.webp",
     "quantity":26,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 10,
   },
   {
     "id":15,
@@ -134,7 +148,8 @@ export const Products: Product[] =  [
     "price":799.99,
     "image":"https://cdn.dummyjson.com/product-images/furniture/wooden-bathroom-sink-with-mirror/thumbnail.webp",
     "quantity":7,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 10,
   },
   {
     "id":16,
@@ -143,7 +158,8 @@ export const Products: Product[] =  [
     "price":1.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/apple/thumbnail.webp",
     "quantity":8,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 10,
   },
   {
     "id":17,
@@ -152,7 +168,8 @@ export const Products: Product[] =  [
     "price":12.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/beef-steak/thumbnail.webp",
     "quantity":86,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":18,
@@ -161,7 +178,8 @@ export const Products: Product[] =  [
     "price":8.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/cat-food/thumbnail.webp",
     "quantity":46,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":19,
@@ -170,7 +188,8 @@ export const Products: Product[] =  [
     "price":9.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/chicken-meat/thumbnail.webp",
     "quantity":97,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":20,
@@ -179,7 +198,8 @@ export const Products: Product[] =  [
     "price":4.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/cooking-oil/thumbnail.webp",
     "quantity":10,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 0,
   },
   {
     "id":21,
@@ -188,7 +208,8 @@ export const Products: Product[] =  [
     "price":1.49,
     "image":"https://cdn.dummyjson.com/product-images/groceries/cucumber/thumbnail.webp",
     "quantity":84,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":22,
@@ -197,7 +218,8 @@ export const Products: Product[] =  [
     "price":10.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/dog-food/thumbnail.webp",
     "quantity":71,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":23,
@@ -206,7 +228,8 @@ export const Products: Product[] =  [
     "price":2.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/eggs/thumbnail.webp",
     "quantity":9,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 0,
   },
   {
     "id":24,
@@ -215,7 +238,8 @@ export const Products: Product[] =  [
     "price":14.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/fish-steak/thumbnail.webp",
     "quantity":74,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":25,
@@ -224,7 +248,8 @@ export const Products: Product[] =  [
     "price":1.29,
     "image":"https://cdn.dummyjson.com/product-images/groceries/green-bell-pepper/thumbnail.webp",
     "quantity":33,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 0,
   },
   {
     "id":26,
@@ -233,7 +258,8 @@ export const Products: Product[] =  [
     "price":0.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/green-chili-pepper/thumbnail.webp",
     "quantity":3,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":27,
@@ -242,7 +268,8 @@ export const Products: Product[] =  [
     "price":6.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/honey-jar/thumbnail.webp",
     "quantity":34,
-    "status":"A caminho"
+    "status":"A caminho",
+    "shippingPrice": 0,
   },
   {
     "id":28,
@@ -251,7 +278,8 @@ export const Products: Product[] =  [
     "price":5.49,
     "image":"https://cdn.dummyjson.com/product-images/groceries/ice-cream/thumbnail.webp",
     "quantity":27,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 15,
   },
   {
     "id":29,
@@ -260,7 +288,8 @@ export const Products: Product[] =  [
     "price":3.99,
     "image":"https://cdn.dummyjson.com/product-images/groceries/juice/thumbnail.webp",
     "quantity":50,
-    "status":"Entregue"
+    "status":"Entregue",
+    "shippingPrice": 15,
   },
   {
     "id":30,
@@ -269,7 +298,8 @@ export const Products: Product[] =  [
     "price":2.49,
     "image":"https://cdn.dummyjson.com/product-images/groceries/kiwi/thumbnail.webp",
     "quantity":99,
-    "status":"Cancelado"
+    "status":"Cancelado",
+    "shippingPrice": 8,
   }
 ]
 
@@ -303,9 +333,6 @@ export const OrdersData: Order[] = [
 		totalPrice: 15,
 		products: [
 			Products[3],
-			Products[10],
-			Products[11],
-			Products[22]
 		]
 	},
 	{

@@ -16,6 +16,7 @@ export interface Product {
 	quantity: number;
 	price: number;
 	category: CategoryEnum;
+	shippingPrice: number;
 }
 
 export interface Shipping {
@@ -46,6 +47,17 @@ export type ProfileStackParamList = {
 		value: string,
 	},
 	ChangePassword: undefined,
+};
+
+export type HomeStackParamList = {
+	HomeTabSection: undefined,
+	ProductDetail: {
+		id: number,
+	},
+	EditProfile: {
+		field: keyof User,
+		value: string,
+	},
 };
 
 export enum CategoryEnum {

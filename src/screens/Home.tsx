@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { getProductsByCategory, resetProducts } from '../store/slices/productSlice';
 
-import { StyleSheet, Text, View, FlatList, ActivityIndicator, Image } from 'react-native';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import ProductItem from '../components/Home/ProductItem';
 
 export default function HomeScreen({ route }) {
@@ -26,7 +26,7 @@ export default function HomeScreen({ route }) {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#fff' }}>
         <ActivityIndicator size="large" color="#7b7b7b" />
       </View>
     )
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     display: 'flex',
-    justifyContent: 'space-between', // Espalha os cards uniformemente
+    justifyContent: 'space-between',
     marginBottom: 15,
   },
 });

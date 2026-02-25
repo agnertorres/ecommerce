@@ -3,10 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home, User, ShoppingCart, ShoppingBag } from 'lucide-react-native';
 
 
-import HomeScreen from '../screens/Home';
 import ShoppingCartScreen from '../screens/ShoppingCart';
 
-import HomeTabSection from './HomeTabSection';
+import HomeStack from './HomeStack';
 import OrdersStack from './OrdersStack';
 import ProfileStack from './ProfileStack';
 
@@ -25,7 +24,7 @@ export function AppStack() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeTabSection}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color, size, }) => (
             <Home color={color} size={size} strokeWidth={1.5} />

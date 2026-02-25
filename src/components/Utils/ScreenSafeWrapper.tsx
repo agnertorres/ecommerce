@@ -8,14 +8,14 @@ interface ScreenSafeWrapperProps {
   backgroundColor?: string;
 }
 
-export default function ScreenSafeWrapper({ children, style, backgroundColor }: ScreenSafeWrapperProps) {
+export default function ScreenSafeWrapper({ children, style, backgroundColor = '#fff' }: ScreenSafeWrapperProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ 
+    <View style={{
       flex: 1, 
       paddingTop: insets.top, 
-      backgroundColor: backgroundColor || '#fff',
+      backgroundColor,
       ...style
     }}>
       {children}

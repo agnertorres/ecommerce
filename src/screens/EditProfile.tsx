@@ -153,7 +153,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 7,
     maxWidth: 500
   },
   cancelText: {

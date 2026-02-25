@@ -1,18 +1,26 @@
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
-
 import { Product } from '../../types';
+import { useNavigation } from '@react-navigation/native';
+import { formatMoney } from '../../utils';
+
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 interface ProductItemProps {
   product: Product
 }
 
-export default function ProductItem ({ product }: ProductItemProps){
+export default function ProductItem ({ product }: ProductItemProps) {
+  const navigation = useNavigation();
+
+	const selectProduct = () => {
+		navigation.navigate('ProductDetail', { id: product.id });
+	}
+
   return (
-    <View style={styles.shadowWrapper}>
+    <TouchableOpacity style={styles.shadowWrapper} onPress={selectProduct}>
       <View style={styles.cardInternal}>
         <View style={styles.imageBackground}>
-          <Image 
-            source={{ uri: product.image }} 
+          <Image
+            source={{ uri: product.image }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -20,10 +28,20 @@ export default function ProductItem ({ product }: ProductItemProps){
         
         <View style={styles.info}>
           <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>R$ {product.price}</Text>
+          <Text style={styles.price}>
+            {formatMoney(product.price)}
+          </Text>
+          <Text style={styles.paymentInInstallments}>
+            10x {formatMoney((product.price / 10))} sem juros
+          </Text>
+          {
+            product?.shippingPrice === 0
+              ? <Text style={styles.shippingPrice}>Frete grátis</Text>
+              : ''
+          }
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -62,12 +80,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    color: '#333',
+    color: '#515151',
     height: 40,
   },
   price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#007BFF',
+    fontSize: 20,
+    color: '#343434'
   },
+  paymentInInstallments: {
+    fontSize: 13,
+    color: '#00a71f'
+  },
+  shippingPrice: {
+    marginTop: 15,
+    color: '#00a71f',
+  }
 });

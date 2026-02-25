@@ -8,7 +8,7 @@ export function getUserData(userToken: userToken): Promise<User> {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			userToken ? resolve(UserData) : reject('Token inválido');
-    }, 1500);
+    }, 500);
 	})
 }
 
