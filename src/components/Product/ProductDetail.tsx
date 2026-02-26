@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
 import { useNavigation } from '@react-navigation/native';
-import { formatMoney } from '../../utils';
+import { AppStackParamList } from '../../types/navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Product } from '../../types';
 import {
   StyleSheet,
@@ -12,23 +13,19 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Alert,
-  AlertButton
 } from 'react-native';
 import { blue, lightBlue, lightGreen, white, darkGray, gray, lightGray } from '../ui/colors';
-import { addProduct } from '../../store/slices/shoppingCartSlice';
 import Button from '../ui/Button';
 import SelectQuantityModal from './SelectQuantityModal';
+import { formatMoney } from '../../utils';
+import { addProduct } from '../../store/slices/shoppingCartSlice';
 
-interface ProductDetailProps {
-  product: Product | null;
-}
-
-export default function ProductDetail({ product }: ProductDetailProps) {
+export default function ProductDetail({ product }: { product: Product}) {
   const dispatch = useDispatch<AppDispatch>();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
   const buyNow = () => {
     dispatch(addProduct({ product, quantity: selectedQuantity }));

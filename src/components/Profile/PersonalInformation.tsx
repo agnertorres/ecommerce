@@ -1,4 +1,4 @@
-import { User as UserI } from '../../types';
+import { User as UserI, EditFieldProps } from '../../types';
 
 import { User, IdCard, MapPin } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -7,7 +7,7 @@ import LinkButton from './LinkButton';
 
 interface PersonalInformationProps {
 	user: UserI | null;
-	editField: () => {};
+	editField: ({ field, value }: EditFieldProps) => void;
 }
 
 export default function PersonalInformation({ user, editField }: PersonalInformationProps) {

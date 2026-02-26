@@ -33,7 +33,7 @@ const keyboardType: User = {
 };
 
 export default function EditProfileScreen({ route }: EditProfileProps) {
-  const [data, setData] = useState('');
+  const [data, setData] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
   const { field, value } = route.params;
 

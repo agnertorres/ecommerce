@@ -4,12 +4,15 @@ import { formatMoney } from '../../utils';
 import { black, lightGreen, white, darkGray, gray, lightBlack } from '../../components/ui/colors';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { HomeStackParamList } from '../../types/navigation';
+
 interface ProductItemProps {
   product: Product
 }
 
 export default function ProductItem ({ product }: ProductItemProps) {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
 	const selectProduct = () => {
 		navigation.navigate('ProductDetail', { id: product.id });

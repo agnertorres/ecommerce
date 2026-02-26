@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { darkGray } from './colors';
 
 interface CardProps {
 	style?: Object;
@@ -19,7 +20,7 @@ const cardStyle = StyleSheet.create({
 		padding: 15,
 		backgroundColor: '#fff',
 		borderRadius: 2,
-		shadowColor: '#2e2e2e',
+		shadowColor: darkGray,
 		shadowOffset: {
 			width: 0,
 			height: 2,

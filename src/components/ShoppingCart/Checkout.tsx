@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
+import { darkGray, lightGreen, white } from '../ui/colors';
 import Button from '../ui/Button';
 
 import { selectCartTotalItems, selectCartSummary } from '../../store/slices/shoppingCartSlice';
@@ -20,7 +21,7 @@ export default function CheckOut() {
       </View>
       <View style={[styles.checkoutSection]}>
         <Text style={styles.checkoutText}>Frete</Text>
-        <Text style={[styles.checkoutText, { color: freeShipping ? '#00a71f' : ''}]}>
+        <Text style={[styles.checkoutText, { color: freeShipping ? lightGreen : ''}]}>
           {freeShipping ? 'Grátis': formatMoney(shipping)}
         </Text>
       </View>
@@ -41,9 +42,9 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '100%',
     gap: 10,
-    backgroundColor: '#fff',
+    backgroundColor: white,
     marginTop: 10,
-    shadowColor: '#2e2e2e',
+    shadowColor: darkGray,
 		shadowOffset: {
 			width: 0,
 			height: 2,

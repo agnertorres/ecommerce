@@ -3,6 +3,7 @@ import { AppDispatch } from "../../store";
 import { Cartitem } from "../../types";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
+import { lightGreen } from "../ui/colors";
 import { formatMoney } from "../../utils";
 import { removeProduct } from "../../store/slices/shoppingCartSlice";
 
@@ -47,7 +48,7 @@ export default function Product({ id, title, quantity, image, price, shippingPri
             <View>
               <Text style={styles.totalPrice}>{formatMoney(totalPrice)}</Text>
             </View>
-            <Text style={[styles.shippingPrice, { color: freeShipping ? '#00a71f' : '' }]}>
+            <Text style={[styles.shippingPrice, { color: freeShipping ? lightGreen : '' }]}>
               {freeShipping ? 'Grátis' : formatMoney(shippingPrice)}
             </Text>
           </View>
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     borderWidth: .5,
-    borderColor: '#d7d7d7'
+    borderColor: '#d7d7d7',
   },
   image: {
     width: '100%',

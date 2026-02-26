@@ -39,6 +39,11 @@ export interface Cartitem extends Product {
 	quantity: number;
 }
 
+export interface EditFieldProps { 
+	field: string;
+	value?: string;
+}
+
 export enum CategoryEnum {
 	Eletrônicos = 'Eletrônicos',
 	Casa = 'Casa',

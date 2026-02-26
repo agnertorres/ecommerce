@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { EditFieldProps } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '../types/navigation';
 import { AppDispatch, RootState } from '../store';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,20 +12,15 @@ import Modal from '../components/Profile/Modal';
 import PersonalInformation from '../components/Profile/PersonalInformation';
 import AccountData from '../components/Profile/AccountData';
 
-interface editFieldProps { 
-	field: string;
-	value?: string;
-}
-
 export default function ProfileScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const safeAreaInsets = useSafeAreaInsets();
   
   const { data } = useSelector((state: RootState) => state.user);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   
-  const editField = ({ field, value }: editFieldProps) => {
+  const editField = ({ field, value }: EditFieldProps) => {
 
     if (field === 'password') {
       navigation.navigate('ChangePassword');

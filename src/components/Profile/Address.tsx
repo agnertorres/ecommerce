@@ -3,9 +3,11 @@ import { RootState } from '../../store';
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight } from 'lucide-react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '../../types/navigation';
 
 export default function Address() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
 
   const { data } = useSelector((state: RootState) => state.user);
 

@@ -1,4 +1,4 @@
-import { User } from '../../types';
+import { User, EditFieldProps } from '../../types';
 
 import { Phone, Mail, KeyRound } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
@@ -7,7 +7,7 @@ import LinkButton from './LinkButton';
 
 interface AccountDataProps {
   user: User | null;
-  editField: () => void;
+  editField: ({ field, value }: EditFieldProps) => void;
 }
 
 export default function AccountData({ user, editField }: AccountDataProps) {

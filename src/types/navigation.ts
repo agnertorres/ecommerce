@@ -42,7 +42,7 @@ export type ProfileStackParamList = {
   Profile: undefined,
   EditProfile: {
     field: string,
-    value: string,
+    value?: string,
   },
   ChangePassword: undefined,
 };
