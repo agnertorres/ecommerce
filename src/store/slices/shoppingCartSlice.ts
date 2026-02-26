@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit'
 import { RootState } from '..';
 import { Cartitem, Product } from '../../types';
 
@@ -23,16 +23,16 @@ const shoppingCartSlice = createSlice({
     clearProducts: (state) => {
       state.products = [];
     },
-    addProduct: (state, action: PayloadAction<Product>) => {
-      const product = action.payload;
+    addProduct: (state, action: PayloadAction<{ product: Product, quantity: number }>) => {
+      const { product, quantity } = action.payload;
       const existingItem = state.products.find(item => item.id === product.id);
 
       if (existingItem) {
         if (existingItem.quantity < existingItem.stock) {
-          existingItem.quantity += 1;
+          existingItem.quantity += quantity;
         }
       } else {
-        state.products.push({ ...product, quantity: 1 });
+        state.products.push({ ...product, quantity });
       }
     },
     removeProduct: (state, action: PayloadAction<number>) => {
@@ -62,31 +62,40 @@ const shoppingCartSlice = createSlice({
   },
 });
 
-export const selectCartTotalItems = (state: RootState) => {
-  return state.shoppingCart.products.reduce((total, item) => {
-    return total + item.quantity;
-  }, 0);
-};
-
-export const selectCartSubtotal = (state: RootState) => {
-  return state.shoppingCart.products.reduce((total, item) => {
-    return total + (item.price * item.quantity);
-  }, 0);
-};
-
-export const selectCartTotalPrice = (state: RootState) => {
-  return state.shoppingCart.products.reduce((total, item) => {
-    return total + (item.price * item.quantity) + item.shippingPrice;
-  }, 0);
-};
-
-export const selectTotalShipping = (state: RootState) => {
-  return state.shoppingCart.products.reduce((total, item) => {
-    return total + item.shippingPrice;
-  }, 0);
-};
-
 export const selectTotalProducts = (state: RootState) => state.shoppingCart.products;
+
+const selectCartItems = (state: RootState) => state.shoppingCart.products;
+
+export const selectCartTotalItems = createSelector(
+  [selectCartItems],
+  (products) => products.reduce((total, item) => total + item.quantity, 0)
+);
+
+export const selectCartSubtotal = createSelector(
+  [selectCartItems],
+  (products) => products.reduce((total, item) => total + (item.price * item.quantity), 0)
+);
+
+export const selectTotalShipping = createSelector(
+  [selectCartItems],
+  (products) => products.reduce((total, item) => total + item.shippingPrice, 0)
+);
+
+export const selectCartTotalPrice = createSelector(
+  [selectCartSubtotal, selectTotalShipping],
+  (subtotal, shipping) => subtotal + shipping
+);
+
+export const selectCartSummary = createSelector(
+  [selectCartSubtotal, selectTotalShipping],
+  (subtotal, totalShipping) => {
+    return {
+      subtotal,
+      shipping: totalShipping,
+      total: subtotal + totalShipping
+    };
+  }
+);
 
 export const {
   clearProducts,

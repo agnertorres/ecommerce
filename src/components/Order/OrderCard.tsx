@@ -5,14 +5,16 @@ import {
 	TouchableOpacity,
 	StyleSheet,
 } from 'react-native';
-
+import { white, blue, separator } from '../ui/colors';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { OrdersStackParamList } from '../../types/navigation';
 
 import ProductList from './ProductList';
 import Card from '../ui/Card';
 
 export default function OrderCard({ id, date, products }: Order) {
-	const navigation = useNavigation();
+	const navigation = useNavigation<NativeStackNavigationProp<OrdersStackParamList>>();
 
 	const showOrderDetail = () => {
 		navigation.navigate('OrderDetail', { id });
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
 	orderContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		backgroundColor: '#fff',
+		backgroundColor: white,
 		alignItems: 'center',
 		marginHorizontal: 20,
 		marginTop: 20,
@@ -55,12 +57,12 @@ const styles = StyleSheet.create({
 		fontWeight: 500,
 	},
 	showDetail: {
-		color: '#007BFF',
+		color: blue,
 	},
 	orderContent: {
 		display: 'flex',
 		width: '100%',
 		borderTopWidth: 0.5,
-		borderTopColor: '#e7e7e7eb',
+		borderTopColor: separator,
 	},
 });

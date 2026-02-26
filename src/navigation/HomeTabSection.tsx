@@ -2,20 +2,21 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ScreenSafeWrapper from '../components/Utils/ScreenSafeWrapper';
 import Header from '../components/Home/Header';
 import HomeScreen from '../screens/Home';
+import { blue } from '../components/ui/colors';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function HomeTabSection() {
 	return (
-		<ScreenSafeWrapper backgroundColor={'#007BFF'}>
+		<ScreenSafeWrapper backgroundColor={blue}>
 			<Header />
 			<Tab.Navigator
 				screenOptions={{
 					lazy: true,
 					tabBarScrollEnabled: true,
-					tabBarActiveTintColor: '#007BFF',
+					tabBarActiveTintColor: blue,
 					tabBarInactiveTintColor: '#888',
-					tabBarIndicatorStyle: { backgroundColor: '#007BFF', height: 3 },
+					tabBarIndicatorStyle: { backgroundColor: blue, height: 3 },
 					tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', textTransform: 'none' },
 					tabBarStyle: { elevation: 0, shadowOpacity: 0, display: 'flex' }, // Remove a linha feia no Android
 					tabBarItemStyle: { width: 'auto', paddingVertical: 0, paddingHorizontal: 5, }

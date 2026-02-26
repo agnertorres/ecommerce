@@ -4,7 +4,7 @@ import ProductDetailScreen from '../screens/ProductDetail';
 import HomeTabSection from './HomeTabSection';
 import EditProfileScreen from '../screens/EditProfile';
 
-import { HomeStackParamList } from '../types';
+import { HomeStackParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 

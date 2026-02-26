@@ -4,7 +4,7 @@ import ProfileScreen from '../screens/Profile';
 import EditProfileScreen from '../screens/EditProfile';
 import ChangePasswordScreen from '../screens/ChangePassword';
 
-import { ProfileStackParamList } from '../types';
+import { ProfileStackParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
 

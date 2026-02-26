@@ -8,7 +8,7 @@ import { removeProduct } from "../../store/slices/shoppingCartSlice";
 
 import Quantity from "./Quantity";
 
-export default function Product({ id, title, quantity, image, price, shippingPrice }: Cartitem) {
+export default function Product({ id, title, quantity, image, price, shippingPrice, stock }: Cartitem) {
   const dispatch = useDispatch<AppDispatch>();
 
   const totalPrice = price * quantity;
@@ -38,7 +38,7 @@ export default function Product({ id, title, quantity, image, price, shippingPri
             </TouchableOpacity>
           </View>
           <View style={styles.productInfoRow}>
-            <Quantity quantity={quantity} id={id} />
+            <Quantity quantity={quantity} id={id} stock={stock} />
           </View>
         </View>
         <View style={styles.productInfoRow}>

@@ -1,7 +1,7 @@
 import { Product } from '../../types';
 import { useNavigation } from '@react-navigation/native';
 import { formatMoney } from '../../utils';
-
+import { black, lightGreen, white, darkGray, gray, lightBlack } from '../../components/ui/colors';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 interface ProductItemProps {
@@ -48,12 +48,12 @@ export default function ProductItem ({ product }: ProductItemProps) {
 const styles = StyleSheet.create({
   shadowWrapper: {
     width: '48%',
-    backgroundColor: '#fff',
+    backgroundColor: white,
     borderRadius: 5,
     // --- Sombra Android ---
     elevation: 4,
     // --- Sombra iOS ---
-    shadowColor: '#000',
+    shadowColor: black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.13,
     shadowRadius: 2,
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 5,
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    backgroundColor: white,
   },
   imageBackground: {
     width: '100%',
     aspectRatio: 1,
-    backgroundColor: '#f3f3f3',
+    backgroundColor: gray,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -80,19 +80,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    color: '#515151',
+    color: darkGray,
     height: 40,
   },
   price: {
     fontSize: 20,
-    color: '#343434'
+    color: lightBlack,
   },
   paymentInInstallments: {
     fontSize: 13,
-    color: '#00a71f'
+    color: lightGreen,
   },
   shippingPrice: {
     marginTop: 15,
-    color: '#00a71f',
+    color: lightGreen,
   }
 });

@@ -4,13 +4,15 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
 
 import { addProductQuantity, decreaseProductQuantity } from "../../store/slices/shoppingCartSlice";
+import { darkGray, gray, red } from "../ui/colors";
 
 interface QuantityComponentProps {
   quantity: number;
   id: number;
+  stock: number;
 }
 
-export default function Quantity ({ quantity, id }: QuantityComponentProps) {
+export default function Quantity ({ quantity, id, stock }: QuantityComponentProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const addQuantity = () => {
@@ -24,7 +26,7 @@ export default function Quantity ({ quantity, id }: QuantityComponentProps) {
   return (
     <View style={styles.container}>
       <Text>Quantidade: </Text>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, { borderColor: quantity > stock ? red : '#ccc' }]}>
         <TouchableOpacity style={styles.button} onPress={decreaseQuantity}>
           {
             quantity < 2
@@ -32,9 +34,9 @@ export default function Quantity ({ quantity, id }: QuantityComponentProps) {
               : <Text>-</Text>
           }
         </TouchableOpacity>
-        <Text>{quantity}</Text>
-        <TouchableOpacity style={styles.button} onPress={addQuantity}>
-          <Text>+</Text>
+        <Text style={{ color: quantity > stock ? red : darkGray }}>{quantity}</Text>
+        <TouchableOpacity disabled={quantity >= stock} style={styles.button} onPress={addQuantity}>
+          <Text style={{ color: quantity >= stock ? gray : darkGray }}>+</Text>
         </TouchableOpacity>
       </View>
     </View>

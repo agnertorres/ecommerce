@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import { ChevronLeft } from 'lucide-react-native';
+import { blue, white, gray } from '../ui/colors';
 
 import Address from '../Profile/Address';
 
 interface HeaderProps {
-	style: Object;
-	showBackButton: boolean;
+	style?: Object;
+	showBackButton?: boolean;
 }
 
 export default function Header({ style, showBackButton = false }: HeaderProps) {
@@ -45,7 +46,7 @@ interface BackButtonProps {
 
 const BackButton = ({ onPress }: BackButtonProps) => (
 	<TouchableOpacity onPress={onPress}>
-		<ChevronLeft color={'#fff'} size={40} strokeWidth={1.4} />
+		<ChevronLeft color={white} size={40} strokeWidth={1.4} />
 	</TouchableOpacity>
 )
 
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
 		gap: 15,
 		width: '100%',
 		height: 100,
-		backgroundColor: '#007BFF',
+		backgroundColor: blue,
 		paddingVertical: 10,
 	},
 	title: {
@@ -75,8 +76,8 @@ const styles = StyleSheet.create({
 	input: {
     flexGrow: 1,
     height: 32,
-		backgroundColor: '#fff',
-    borderColor: '#ccc',
+		backgroundColor: white,
+    borderColor: gray,
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,

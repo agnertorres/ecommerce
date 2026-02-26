@@ -2,38 +2,31 @@ import { useSelector } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from '../ui/Button';
 
-import {
-  selectCartTotalItems,
-  selectCartTotalPrice,
-  selectCartSubtotal,
-  selectTotalShipping,
-} from '../../store/slices/shoppingCartSlice';
+import { selectCartTotalItems, selectCartSummary } from '../../store/slices/shoppingCartSlice';
 
 import { formatMoney } from '../../utils';
 
 export default function CheckOut() {
   const totalItems = useSelector(selectCartTotalItems);
-  const totalprice = useSelector(selectCartTotalPrice);
-  const subTotal = useSelector(selectCartSubtotal);
-  const totalShippingPrice = useSelector(selectTotalShipping);
+  const { subtotal, shipping, total } = useSelector(selectCartSummary);
 
-  const freeShipping = totalShippingPrice === 0;
+  const freeShipping = shipping === 0;
 
   return (
     <View style={styles.checkoutContainer}>
       <View style={[styles.checkoutSection]}>
         <Text style={styles.checkoutText}>{`Produtos (${totalItems}):`}</Text>
-        <Text style={styles.checkoutText}>{formatMoney(subTotal)}</Text>
+        <Text style={styles.checkoutText}>{formatMoney(subtotal)}</Text>
       </View>
       <View style={[styles.checkoutSection]}>
         <Text style={styles.checkoutText}>Frete</Text>
         <Text style={[styles.checkoutText, { color: freeShipping ? '#00a71f' : ''}]}>
-          {freeShipping ? 'Grátis': formatMoney(totalShippingPrice)}
+          {freeShipping ? 'Grátis': formatMoney(shipping)}
         </Text>
       </View>
       <View style={[styles.checkoutSection]}>
         <Text style={styles.totalPrice}>Total</Text>
-        <Text style={styles.totalPrice}>{formatMoney(totalprice)}</Text>
+        <Text style={styles.totalPrice}>{formatMoney(total)}</Text>
       </View>
       <Button>
         Continuar

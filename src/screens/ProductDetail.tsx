@@ -1,30 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import { Product } from '../types';
-import { formatMoney } from '../utils';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ActivityIndicator,
-  ScrollView,
-  TouchableWithoutFeedback,
-} from 'react-native';
-
+import { View, ActivityIndicator } from 'react-native';
+import { white, lightGray } from '../components/ui/colors';
 import { getProductById } from '../services/product';
-import { addProduct } from '../store/slices/shoppingCartSlice';
-import Button from '../components/ui/Button';
 import Header from '../components/Home/Header';
+
+import ProductDetail from '../components/Product/ProductDetail';
 
 export default function ProductDetailScreen({ route }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [product, setProduct] = useState<Product | null>(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   const safeAreaInsets = useSafeAreaInsets();
 
@@ -47,7 +34,7 @@ export default function ProductDetailScreen({ route }) {
   }, [id]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: white }}>
       <Header
         showBackButton={true}
         style={{
@@ -57,154 +44,11 @@ export default function ProductDetailScreen({ route }) {
       />
       { 
         loading
-          ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
-              <ActivityIndicator size="large" color="#7b7b7b" />
+          ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: white }}>
+              <ActivityIndicator size="large" color={lightGray} />
             </View>
-          : <ProductDetail
-              product={product}
-              selectedQuantity={selectedQuantity}
-              setSelectedQuantity={setSelectedQuantity}
-            />
+          : <ProductDetail product={product} />
       }
     </View>
    );
 }
-
-interface ProductDetailProps {
-  product: Product | null;
-  selectedQuantity: number;
-  setSelectedQuantity: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const ProductDetail = ({ product, selectedQuantity, setSelectedQuantity }: ProductDetailProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const navigation = useNavigation();
-
-  const buyNow = () => {
-    dispatch(addProduct(product));
-    navigation.navigate('ShoppingCart');
-  }
-
-  const addToCart = () => {
-    dispatch(addProduct(product));
-  }
-
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{product?.title}</Text>
-      <View style={styles.imageBackground}>
-        <Image
-          source={{ uri: product?.image }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
-
-      <View style={styles.priceContainer}>
-        <Text style={styles.price}>
-          {formatMoney(product?.price)}
-        </Text>
-        <Text style={styles.paymentInInstallments}>
-          10x {formatMoney((product?.price / 10))} sem juros
-        </Text>
-      </View>
-
-      <View style={styles.shippingContainer}>
-        {
-          product?.shippingPrice === 0
-            ? <Text style={{ color: '#00a71f' }}>Frete grátis</Text>
-            : <Text style={{ color: '#3f3f3f'}}>
-                Entrega: <Text style={{ fontWeight: 'bold' }}>{formatMoney(product?.shippingPrice)}</Text>
-              </Text>
-        }
-      </View>
-
-      <Text style={styles.stock}>Estoque disponível</Text>
-      <TouchableWithoutFeedback>
-        <View style={styles.quantityContainer}>
-          <Text>
-            Quantidade: <Text style={{ fontWeight: 'bold' }}>{selectedQuantity}</Text>
-          </Text>
-          <Text style={styles.stock}>
-            {`(${product?.stock} Disponível)`}
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
-
-      <View style={{display: 'flex', flexDirection:'column',  gap: 10, width: '100%', marginVertical: 15 }}>
-        <Button onPress={buyNow}>
-          Comprar agora
-        </Button>
-        <Button onPress={addToCart} backgroundColor={'#d3e8ff'} textColor={'#007BFF'}>
-          Adicionar ao carrinho
-        </Button>
-      </View>
-    </ScrollView>
-  )
-};
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '400',
-    width: '100%',
-  },
-  imageBackground: {
-    width: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  priceContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    gap: 3,
-  },
-  price: {
-    fontSize: 28,
-  },
-  paymentInInstallments: {
-    fontSize: 16,
-    color: '#00a71f',
-  },
-  shippingContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginVertical: 10,
-  },
-  stock: {
-    width: '100%',
-    fontSize: 15,
-  },
-  quantityContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: 15,
-		backgroundColor: '#f1f1f1',
-		borderRadius: 5,
-    marginTop: 5,
-    gap: 5,
-  },
-  quantity: {
-    color: '#8d8d8d'
-  },
-});

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ProfileStackParamList } from '../types';
+import { ProfileStackParamList } from '../types/navigation';
 import { useNavigation } from '@react-navigation/native';
 
 import { KeyboardTypeOptions } from 'react-native';

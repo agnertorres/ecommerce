@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { OrderStackParamList } from '../types';
+import { OrdersStackParamList } from '../types/navigation';
 
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { Handbag } from 'lucide-react-native';
@@ -9,7 +9,7 @@ import OrderDetail from '../components/Order/OrderDetail';
 
 import { getOrderById } from '../services/order';
 
-type OrderDetailProps = NativeStackScreenProps<OrderStackParamList, 'OrderDetail'>;
+type OrderDetailProps = NativeStackScreenProps<OrdersStackParamList, 'OrderDetail'>;
 
 export default function OrderDetailScreen({ route }: OrderDetailProps) {
   const [order, setOrder] = useState(null);

@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OrdersScreen from '../screens/Orders';
 import OrderDetailScreen from '../screens/OrderDetail';
 
-import { OrderStackParamList } from '../types';
+import { OrdersStackParamList } from '../types/navigation';
 
-const Stack = createNativeStackNavigator<OrderStackParamList>();
+const Stack = createNativeStackNavigator<OrdersStackParamList>();
 
 export default function OrdersStack() {
   return (

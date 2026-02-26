@@ -39,31 +39,6 @@ export interface Cartitem extends Product {
 	quantity: number;
 }
 
-export type OrderStackParamList = {
-	OrdersList: undefined,
-	OrderDetail: { id: number },
-};
-
-export type ProfileStackParamList = {
-	Profile: undefined,
-	EditProfile: {
-		field: keyof User,
-		value: string,
-	},
-	ChangePassword: undefined,
-};
-
-export type HomeStackParamList = {
-	HomeTabSection: undefined,
-	ProductDetail: {
-		id: number,
-	},
-	EditProfile: {
-		field: keyof User,
-		value: string,
-	},
-};
-
 export enum CategoryEnum {
 	Eletrônicos = 'Eletrônicos',
 	Casa = 'Casa',
