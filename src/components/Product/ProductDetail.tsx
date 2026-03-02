@@ -29,14 +29,14 @@ export default function ProductDetail({ product }: { product: Product}) {
 
   const buyNow = () => {
     dispatch(addProduct({ product, quantity: selectedQuantity }));
-    navigation.navigate('ShoppingCart');
+    navigation.navigate('ShoppingCartStack', { screen: 'ShoppingCart' });
   }
 
   const addToCart = () => {
     dispatch(addProduct({ product, quantity: selectedQuantity }));
     Alert.alert('Produto adicionado', 'Seu produto foi adicionado ao carrinho.',
       [
-        { text: 'Ir para o carrinho', onPress: () => navigation.navigate('ShoppingCart') },
+        { text: 'Ir para o carrinho', onPress: () => navigation.navigate('ShoppingCartStack', { screen: 'ShoppingCart' }) },
         { text: 'Continuar comprando', onPress: () => navigation.goBack() }
       ],
       {

@@ -1,4 +1,7 @@
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { ShoppingCartStackParamList } from '../../types/navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
 import { darkGray, lightGreen, white } from '../ui/colors';
 import Button from '../ui/Button';
@@ -12,6 +15,12 @@ export default function CheckOut() {
   const { subtotal, shipping, total } = useSelector(selectCartSummary);
 
   const freeShipping = shipping === 0;
+
+  const navigation = useNavigation<NativeStackNavigationProp<ShoppingCartStackParamList>>();
+
+  const proceedCheckout = () => {
+    navigation.navigate('ShippingAddress');
+  }
 
   return (
     <View style={styles.checkoutContainer}>
@@ -29,7 +38,7 @@ export default function CheckOut() {
         <Text style={styles.totalPrice}>Total</Text>
         <Text style={styles.totalPrice}>{formatMoney(total)}</Text>
       </View>
-      <Button>
+      <Button onPress={proceedCheckout}>
         Continuar
       </Button>
     </View>

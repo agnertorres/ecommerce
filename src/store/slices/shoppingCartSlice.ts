@@ -4,6 +4,7 @@ import { Cartitem, Product } from '../../types';
 
 interface ShoppingCartSlice {
   products: Cartitem[];
+  paymentMethod: string | null;
   loading: boolean;
   refreshing: boolean;
   error: string | null;
@@ -11,6 +12,7 @@ interface ShoppingCartSlice {
 
 const initialState: ShoppingCartSlice = {
   products: [],
+  paymentMethod: null,
   loading: false,
   refreshing: false,
   error: null,
@@ -59,12 +61,17 @@ const shoppingCartSlice = createSlice({
         }
       }
     },
+    selectPaymentMethod: (state, action: PayloadAction<string>) => {
+      state.paymentMethod = action.payload;
+    },
   },
 });
 
 export const selectTotalProducts = (state: RootState) => state.shoppingCart.products;
 
 const selectCartItems = (state: RootState) => state.shoppingCart.products;
+
+const getPaymentMethod = (state: RootState) => state.shoppingCart.paymentMethod;
 
 export const selectCartTotalItems = createSelector(
   [selectCartItems],
@@ -87,12 +94,14 @@ export const selectCartTotalPrice = createSelector(
 );
 
 export const selectCartSummary = createSelector(
-  [selectCartSubtotal, selectTotalShipping],
-  (subtotal, totalShipping) => {
+  [selectCartSubtotal, selectTotalShipping, getPaymentMethod, selectCartTotalItems],
+  (subtotal, totalShipping, paymentMethod, totalItems) => {
     return {
       subtotal,
       shipping: totalShipping,
-      total: subtotal + totalShipping
+      total: subtotal + totalShipping,
+      paymentMethod,
+      totalItems,
     };
   }
 );
@@ -103,6 +112,7 @@ export const {
   removeProduct,
   decreaseProductQuantity,
   addProductQuantity,
+  selectPaymentMethod,
 } = shoppingCartSlice.actions;
 
 export default shoppingCartSlice.reducer;

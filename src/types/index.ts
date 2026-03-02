@@ -1,4 +1,5 @@
 export interface User {
+	id: number,
 	name: string;
 	cpf: string;
 	nickname: string;
@@ -11,7 +12,7 @@ export interface User {
 export interface Product {
 	id: number;
 	title: string;
-	status: string;
+	status: string; //precisa ir para a tabela order_items
 	image: string;
 	stock: number;
 	price: number;

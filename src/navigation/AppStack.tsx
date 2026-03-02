@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux';
 import { selectCartTotalItems } from '../store/slices/shoppingCartSlice';
 import { Home, User, ShoppingCart, ShoppingBag } from 'lucide-react-native';
 
-import ShoppingCartScreen from '../screens/ShoppingCart';
-
 import HomeStack from './HomeStack';
 import OrdersStack from './OrdersStack';
 import ProfileStack from './ProfileStack';
+import ShoppingCartStack from './ShoppingCartStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,8 +35,8 @@ export function AppStack() {
         }}
       />
       <Tab.Screen
-        name="ShoppingCart"
-        component={ShoppingCartScreen}
+        name="ShoppingCartStack"
+        component={ShoppingCartStack}
         options={{
           tabBarIcon: ({ color, size, }) => (
             <ShoppingCart color={color} size={size} strokeWidth={1.5} />
@@ -49,9 +48,7 @@ export function AppStack() {
                 : cartBadgeCount
               : undefined
           ),
-          headerTitle: `Carrinho (${cartBadgeCount})`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerShown: false,
           tabBarLabel: 'Carrinho', 
         }}
       />

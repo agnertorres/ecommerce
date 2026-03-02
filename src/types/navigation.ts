@@ -15,7 +15,7 @@ export type AuthStackParamList = {
 //APP STACK
 export type AppStackParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
-  ShoppingCart: undefined;
+  ShoppingCartStack: NavigatorScreenParams<ShoppingCartStackParamList>;
   Orders: NavigatorScreenParams<OrdersStackParamList>;
   MyAccount: NavigatorScreenParams<ProfileStackParamList>;
 };
@@ -38,11 +38,19 @@ export type OrdersStackParamList = {
   };
 }
 
+export type ShoppingCartStackParamList = {
+  ShoppingCart: undefined;
+  ShippingAddress: undefined;
+  PaymentMethod: undefined;
+  OrderConfirmation: undefined;
+  CheckoutSuccess: undefined;
+};
+
 export type ProfileStackParamList = {
   Profile: undefined,
   EditProfile: {
     field: string,
-    value?: string,
+    value: string | null,
   },
   ChangePassword: undefined,
 };

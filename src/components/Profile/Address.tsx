@@ -9,17 +9,17 @@ import { ProfileStackParamList } from '../../types/navigation';
 export default function Address() {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
 
-  const { data } = useSelector((state: RootState) => state.user);
+  const { address } = useSelector((state: RootState) => state.user);
 
   const changeAddress = () => {
-		navigation.navigate('EditProfile', { field: 'address', value: data?.address });
+		navigation.navigate('EditProfile', { field: 'address', value: address });
 	}
 
   return (
     <TouchableOpacity style={styles.addressContainer} onPress={changeAddress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
         <MapPin color={'#fff'} size={21} strokeWidth={1.4} />
-        <Text style={styles.addressText}>{data?.address}</Text>
+        <Text style={styles.addressText}>{address}</Text>
       </View>
       <ChevronRight style={styles.chevronRight} color={'#fff'} size={21} strokeWidth={1.4} />
     </TouchableOpacity>

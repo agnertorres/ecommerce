@@ -16,7 +16,7 @@ export default function ProfileScreen() {
   const dispatch = useDispatch<AppDispatch>();
   const safeAreaInsets = useSafeAreaInsets();
   
-  const { data } = useSelector((state: RootState) => state.user);
+  const data = useSelector((state: RootState) => state.user);
 
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   
