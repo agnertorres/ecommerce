@@ -7,7 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
 
 import { useCartSummary } from '../store/useShoppingCartStore';
-import { useUserStore } from '../store/useUserStore';
+import { useStore } from '../store/';
 import { formatMoney } from '../utils';
 import Button from '../components/ui/Button';
 
@@ -18,7 +18,7 @@ const paymentMethodMap = {
 };
 
 export default function OrderConfirmationScreen() {
-  const { user } = useUserStore();
+  const { user } = useStore.user();
   const { subtotal, shipping, total, paymentMethod, totalItems } = useCartSummary();
 
   const address = 'endereco mockado';

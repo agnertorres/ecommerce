@@ -1,10 +1,9 @@
-import { useAuthStore } from '../../store/useAuthStore';
-import { useProfileModalStore } from '../../store/useProfileModalStore';
+import { useStore } from '../../store';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 
 export default function ModalComponent() {
-  const { visible, showModal } = useProfileModalStore();
-  const { signOut } = useAuthStore();
+  const { visible, showModal } = useStore.profileModal();
+  const { signOut } = useStore.auth();
 
 	const handleSignout = () => {
     signOut();

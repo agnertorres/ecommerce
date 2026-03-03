@@ -3,13 +3,13 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
 import { lightGreen } from "../ui/colors";
 import { formatMoney } from "../../utils";
-import { useShoppingCartStore } from "../../store/useShoppingCartStore";
+import { useStore } from "../../store/";
 
 import Quantity from "./Quantity";
 
 export default function Product({ id, title, quantity, image, price, shippingPrice, stock }: Cartitem) {
 
-  const { removeProduct } = useShoppingCartStore();
+  const { removeProduct } = useStore.shoppingCart();
 
   const totalPrice = price * quantity;
   const freeShipping = shippingPrice === 0;

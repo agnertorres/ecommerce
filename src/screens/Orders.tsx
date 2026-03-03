@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { useOrderStore } from '../store/useOrderStore';
+import { useStore } from '../store';
 import { 
 	StyleSheet,
 	View,
@@ -10,7 +10,7 @@ import {
 import OrderCard from '../components/Order/OrderCard';
 
 export default function OrdersScreen() {
-  const { items, loading, refreshing, getUserOrders } = useOrderStore();
+  const { items, loading, refreshing, getUserOrders } = useStore.order();
 
   const fetchOrders = useCallback(() => {
     getUserOrders();

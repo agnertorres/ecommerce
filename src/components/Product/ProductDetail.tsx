@@ -17,7 +17,7 @@ import Button from '../ui/Button';
 import SelectQuantityModal from './SelectQuantityModal';
 import { formatMoney } from '../../utils';
 
-import { useShoppingCartStore } from '../../store/useShoppingCartStore';
+import { useStore } from '../../store';
 
 export default function ProductDetail({ product }: { product: Product}) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,7 +25,7 @@ export default function ProductDetail({ product }: { product: Product}) {
 
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
-  const { addProduct } = useShoppingCartStore();
+  const { addProduct } = useStore.shoppingCart();
 
   const buyNow = () => {
     addProduct(product, selectedQuantity);

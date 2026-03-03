@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
 
-import { useShoppingCartStore } from "../../store/useShoppingCartStore";
+import { useStore } from "../../store/";
 import { darkGray, gray, red } from "../ui/colors";
 
 interface QuantityComponentProps {
@@ -11,7 +11,7 @@ interface QuantityComponentProps {
 }
 
 export default function Quantity ({ quantity, id, stock }: QuantityComponentProps) {
-  const { addProductQuantity, decreaseProductQuantity } = useShoppingCartStore();
+  const { addProductQuantity, decreaseProductQuantity } = useStore.shoppingCart();
 
   const addQuantity = () => {
     addProductQuantity(id);

@@ -4,8 +4,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../types/navigation';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useUserStore } from '../store/useUserStore';
-import { useProfileModalStore } from '../store/useProfileModalStore';
+import { useStore } from '../store/';
+
 
 import Modal from '../components/Profile/Modal';
 import PersonalInformation from '../components/Profile/PersonalInformation';
@@ -14,8 +14,8 @@ import AccountData from '../components/Profile/AccountData';
 export default function ProfileScreen() {
   const safeAreaInsets = useSafeAreaInsets();
 
-  const { user } = useUserStore();
-  const { showModal } = useProfileModalStore();
+  const { user } = useStore.user();
+  const { showModal } = useStore.profileModal();
 
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   

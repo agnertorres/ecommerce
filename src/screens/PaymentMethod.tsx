@@ -5,13 +5,14 @@ import Card from '../components/ui/Card';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
-import { useShoppingCartStore, useCartSummary } from '../store/useShoppingCartStore';
+import { useCartSummary } from '../store/useShoppingCartStore';
+import { useStore } from '../store/';
 import { formatMoney } from '../utils';
 
 export default function PaymentMethodScreen() {
   const { total } = useCartSummary();
 
-  const { setPaymentMethod } = useShoppingCartStore();
+  const { setPaymentMethod } = useStore.shoppingCart();
 
   const navigation = useNavigation<NativeStackNavigationProp<ShoppingCartStackParamList>>();
 

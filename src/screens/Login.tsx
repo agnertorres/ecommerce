@@ -3,17 +3,16 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { AuthStackParamList } from '../types/navigation';
-import { useUserStore } from '../store/useUserStore';
 import { login } from '../services/auth';
 import { saveToken } from '../utils';
 
-import { useAuthStore } from '../store/useAuthStore';
+import { useStore } from '../store';
 
 export default function LoginScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
-  const { setUser } = useUserStore();
-  const { setToken, signIn } = useAuthStore(); 
+  const { setUser } = useStore.user();
+  const { setToken, signIn } = useStore.auth(); 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -5,12 +5,12 @@ import { AuthStack } from './AuthStack';
 import { AppStack } from './AppStack';
 import Loading from '../screens/Loading';
 import { getToken } from '../utils';
-import { useAuthStore } from '../store/useAuthStore';
+import { useStore } from '../store';
 
 const Stack = createNativeStackNavigator();
 
 export function AppNavigator() {
-  const { isLoading, token, isSignout, restoreToken, stopLoading } = useAuthStore();
+  const { isLoading, token, isSignout, restoreToken, stopLoading } = useStore.auth();
 
   useEffect(() => {
     const bootstrapAsync = async () => {

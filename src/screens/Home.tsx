@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { useProductStore } from '../store/useProductStore';
+import { useStore } from '../store/';
 import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import ProductItem from '../components/Home/ProductItem';
 
@@ -11,7 +11,7 @@ export default function HomeScreen({ route }) {
     refreshing,
     fetchProductsByCategory, 
     resetProducts,
-  } = useProductStore();
+  } = useStore.product();
 
   const { name } = route;
 
