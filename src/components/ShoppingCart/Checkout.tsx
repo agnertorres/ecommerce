@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { ShoppingCartStackParamList } from '../../types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -6,13 +5,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { darkGray, lightGreen, white } from '../ui/colors';
 import Button from '../ui/Button';
 
-import { selectCartTotalItems, selectCartSummary } from '../../store/slices/shoppingCartSlice';
+import { useCartSummary } from '../../store/useShoppingCartStore';
 
 import { formatMoney } from '../../utils';
 
 export default function CheckOut() {
-  const totalItems = useSelector(selectCartTotalItems);
-  const { subtotal, shipping, total } = useSelector(selectCartSummary);
+  const { subtotal, shipping, total, totalItems } = useCartSummary();
 
   const freeShipping = shipping === 0;
 

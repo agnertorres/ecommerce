@@ -1,37 +1,30 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootState, AppDispatch } from '../store'
 import { AuthStack } from './AuthStack';
 import { AppStack } from './AppStack';
 import Loading from '../screens/Loading';
-
-import { restoreToken } from '../store/slices/authSlice';
-import { setUserData } from '../store/slices/userSlice';
-import { getUserData, getToken } from '../services/user';
+import { getToken } from '../utils';
+import { useAuthStore } from '../store/useAuthStore';
 
 const Stack = createNativeStackNavigator();
 
 export function AppNavigator() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, token, isSignout } = useSelector((state: RootState) => state.auth);
+  const { isLoading, token, isSignout, restoreToken, stopLoading } = useAuthStore();
 
   useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
-      let userData;
-
       try {
-        userToken = await getToken();
-        userData = await getUserData(userToken);
-        dispatch(setUserData(userData));
+        const appToken = await getToken();
+        if (appToken) {
+          restoreToken(appToken);
+        } else {
+          stopLoading();
+        }
       } catch (e) {
-        console.error('Failed to restore token', e);
+       stopLoading();
       }
-
-      dispatch(restoreToken({ token: userToken }));
-    }
+    };
 
     bootstrapAsync();
   }, []);

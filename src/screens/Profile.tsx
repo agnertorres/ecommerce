@@ -1,22 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { EditFieldProps } from '../types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../types/navigation';
-import { AppDispatch, RootState } from '../store';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { showModal } from '../store/slices/profileModalSlice';
+import { useUserStore } from '../store/useUserStore';
+import { useProfileModalStore } from '../store/useProfileModalStore';
 
 import Modal from '../components/Profile/Modal';
 import PersonalInformation from '../components/Profile/PersonalInformation';
 import AccountData from '../components/Profile/AccountData';
 
 export default function ProfileScreen() {
-  const dispatch = useDispatch<AppDispatch>();
   const safeAreaInsets = useSafeAreaInsets();
-  
-  const data = useSelector((state: RootState) => state.user);
+
+  const { user } = useUserStore();
+  const { showModal } = useProfileModalStore();
 
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
   
@@ -42,10 +41,10 @@ export default function ProfileScreen() {
         <Text style={styles.headerSubtitle}>joaosilva@gmail.com</Text>
       </View>
       <ScrollView style={styles.content}>
-        <PersonalInformation user={data} editField={editField} />
-        <AccountData user={data} editField={editField} />
+        <PersonalInformation user={user} editField={editField} />
+        <AccountData user={user} editField={editField} />
         <View>
-          <TouchableOpacity style={styles.button} onPress={() => dispatch(showModal(true))}>
+          <TouchableOpacity style={styles.button} onPress={() => showModal(true)}>
             <Text style={styles.buttonText}>Sair da conta</Text>
           </TouchableOpacity>
         </View>

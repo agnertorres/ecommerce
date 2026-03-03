@@ -1,22 +1,21 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
 import { Cartitem } from "../../types";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
 import { lightGreen } from "../ui/colors";
 import { formatMoney } from "../../utils";
-import { removeProduct } from "../../store/slices/shoppingCartSlice";
+import { useShoppingCartStore } from "../../store/useShoppingCartStore";
 
 import Quantity from "./Quantity";
 
 export default function Product({ id, title, quantity, image, price, shippingPrice, stock }: Cartitem) {
-  const dispatch = useDispatch<AppDispatch>();
+
+  const { removeProduct } = useShoppingCartStore();
 
   const totalPrice = price * quantity;
   const freeShipping = shippingPrice === 0;
 
   const handleRemoveProduct = () => {
-    dispatch(removeProduct(id));
+    removeProduct(id);
   }
 
   return (

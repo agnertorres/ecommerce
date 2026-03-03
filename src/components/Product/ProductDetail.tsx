@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
 import { useNavigation } from '@react-navigation/native';
 import { AppStackParamList } from '../../types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,22 +16,24 @@ import { blue, lightBlue, lightGreen, white, darkGray, gray, lightGray } from '.
 import Button from '../ui/Button';
 import SelectQuantityModal from './SelectQuantityModal';
 import { formatMoney } from '../../utils';
-import { addProduct } from '../../store/slices/shoppingCartSlice';
+
+import { useShoppingCartStore } from '../../store/useShoppingCartStore';
 
 export default function ProductDetail({ product }: { product: Product}) {
-  const dispatch = useDispatch<AppDispatch>();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 
   const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
+  const { addProduct } = useShoppingCartStore();
+
   const buyNow = () => {
-    dispatch(addProduct({ product, quantity: selectedQuantity }));
+    addProduct(product, selectedQuantity);
     navigation.navigate('ShoppingCartStack', { screen: 'ShoppingCart' });
   }
 
   const addToCart = () => {
-    dispatch(addProduct({ product, quantity: selectedQuantity }));
+    addProduct(product, selectedQuantity);
     Alert.alert('Produto adicionado', 'Seu produto foi adicionado ao carrinho.',
       [
         { text: 'Ir para o carrinho', onPress: () => navigation.navigate('ShoppingCartStack', { screen: 'ShoppingCart' }) },

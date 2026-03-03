@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MapPin, ChevronRight } from 'lucide-react-native';
 import { lightBlack, lightGray, lightGreen } from '../components/ui/colors';
@@ -8,14 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
 
-import { selectTotalShipping } from '../store/slices/shoppingCartSlice';
+import { useCartSummary } from '../store/useShoppingCartStore';
 import { formatMoney } from '../utils';
 
 export default function ShippingAddressScreen() {
-  const { address } = useSelector((state: RootState) => state.user);
-  const totalShipping = useSelector(selectTotalShipping);
+  const { shipping } = useCartSummary();
 
-  const freeShipping = totalShipping === 0;
+  const address = 'endereco mockado';
+
+  const freeShipping = shipping === 0;
 
   const navigation = useNavigation<NativeStackNavigationProp<ShoppingCartStackParamList>>();
 
@@ -33,7 +32,7 @@ export default function ShippingAddressScreen() {
               <View>
                 <Text style={{ fontSize: 16, color: lightBlack }}>{address}</Text>
                 <Text style={{ color: (freeShipping ? lightGreen : lightGray), fontSize: 13, marginTop: 3 }}>
-                  { freeShipping ? 'Grátis' : formatMoney(totalShipping) }
+                  { freeShipping ? 'Grátis' : formatMoney(shipping) }
                 </Text>
               </View>
             </View>

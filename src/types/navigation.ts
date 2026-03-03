@@ -10,6 +10,7 @@ export type AppNavigatorParamList = {
 //AUTH STACK
 export type AuthStackParamList = {
   Auth: undefined;
+  RegisterUser: undefined;
 }
 
 //APP STACK

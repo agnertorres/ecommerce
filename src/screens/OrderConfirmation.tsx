@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MapPin, CreditCard, ReceiptText } from 'lucide-react-native';
 import { gray, lightBlack, lightGray, lightGreen, separator } from '../components/ui/colors';
@@ -8,7 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
 
-import { selectCartSummary } from '../store/slices/shoppingCartSlice';
+import { useCartSummary } from '../store/useShoppingCartStore';
+import { useUserStore } from '../store/useUserStore';
 import { formatMoney } from '../utils';
 import Button from '../components/ui/Button';
 
@@ -19,8 +18,10 @@ const paymentMethodMap = {
 };
 
 export default function OrderConfirmationScreen() {
-  const { name, cpf, address } = useSelector((state: RootState) => state.user);
-  const { subtotal, shipping, total, paymentMethod, totalItems } = useSelector(selectCartSummary);
+  const { user } = useUserStore();
+  const { subtotal, shipping, total, paymentMethod, totalItems } = useCartSummary();
+
+  const address = 'endereco mockado';
 
   const freeShipping = shipping === 0;
 
@@ -57,8 +58,8 @@ export default function OrderConfirmationScreen() {
       <Card style={styles.cardDetail}>
         <ReceiptText size={25} strokeWidth={1} color={lightBlack} />
         <View style={{ gap: 5 }}>
-          <Text style={{ color: lightBlack }}>{name}</Text>
-          <Text style={{ color: lightGray }}>{cpf}</Text>
+          <Text style={{ color: lightBlack }}>{user?.name}</Text>
+          <Text style={{ color: lightGray }}>{user?.cpf}</Text>
         </View>
       </Card>
 

@@ -1,4 +1,5 @@
 import { UserData } from "../mock";
+import api from '../config/axios';
 
 import { User } from '../types';
 
@@ -46,4 +47,17 @@ export function changePassword({ id, currentPassword, newPassword }: ChangePassw
       resolve({ data: 'sucesso' });
     }, 1000);
   });
+};
+
+
+//*******************//
+
+export const createUser = async (userData: User) => {
+  try {
+     const response = await api.post('/users', userData);
+     return response.data;
+  } catch(error) {
+      console.error("Erro inesperado:", error?.message);
+      throw new Error("Erro de conexão");
+  }
 };

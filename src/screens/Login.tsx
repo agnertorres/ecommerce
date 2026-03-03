@@ -1,18 +1,27 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import { signIn } from '../store/slices/authSlice';
-import { setUserData } from '../store/slices/userSlice';
+import { AuthStackParamList } from '../types/navigation';
+import { useUserStore } from '../store/useUserStore';
+import { login } from '../services/auth';
+import { saveToken } from '../utils';
 
-import { getToken, getUserData } from '../services/user';
+import { useAuthStore } from '../store/useAuthStore';
 
 export default function LoginScreen() {
-  const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+
+  const { setUser } = useUserStore();
+  const { setToken, signIn } = useAuthStore(); 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const registerUser = () => {
+    navigation.navigate('RegisterUser');
+  }
 
   const handleSignin = async () => {
     if (!email || !password) {
@@ -22,10 +31,17 @@ export default function LoginScreen() {
     setLoading(true);
     
     try {
-      const token = await getToken();
-      const userData = await getUserData(token);
-      dispatch(setUserData(userData));
-      dispatch(signIn({ token }));
+      const user = await login(email, password);
+      const token = 'token12345';
+
+      if(user) {
+        saveToken(token);
+        setToken(token);
+
+        setUser(user);
+        signIn(token);
+      }
+      
       setLoading(false);
     } catch(e) {
       Alert.alert('Não foi possível concluir');
@@ -59,6 +75,13 @@ export default function LoginScreen() {
         disabled={loading}
       >
         <SubmitButtonContent loading={loading}/>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={registerUser}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
   );

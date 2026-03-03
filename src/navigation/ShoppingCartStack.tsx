@@ -1,7 +1,6 @@
-import { useSelector } from 'react-redux';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
-import { selectCartTotalItems } from '../store/slices/shoppingCartSlice';
+import { useCartSummary } from '../store/useShoppingCartStore';
 
 import ShoppingCartScreen from '../screens/ShoppingCart';
 import ShippingAddressScreen from '../screens/ShippingAddress';
@@ -12,7 +11,7 @@ import CheckoutSuccessScreen from '../screens/CheckoutSuccessScreen';
 const Stack = createNativeStackNavigator<ShoppingCartStackParamList>();
 
 export default function ShoppingCartStack() {
-  const cartBadgeCount = useSelector(selectCartTotalItems);
+  const { totalItems } = useCartSummary();
 
   return (
     <Stack.Navigator>
@@ -20,7 +19,7 @@ export default function ShoppingCartStack() {
         name="ShoppingCart"
         component={ShoppingCartScreen}
         options={{
-          headerTitle: `Carrinho (${cartBadgeCount})`,
+          headerTitle: `Carrinho (${totalItems})`,
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007BFF'},
           headerBackVisible: false,

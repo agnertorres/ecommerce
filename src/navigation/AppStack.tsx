@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useSelector } from 'react-redux';
-import { selectCartTotalItems } from '../store/slices/shoppingCartSlice';
+import { useCartSummary } from '../store/useShoppingCartStore';
 import { Home, User, ShoppingCart, ShoppingBag } from 'lucide-react-native';
 
 import HomeStack from './HomeStack';
@@ -14,7 +13,7 @@ const tabBarActiveTintColor = '#007AFF';
 const tabBarInactiveTintColor = 'gray';
 
 export function AppStack() {
-  const cartBadgeCount = useSelector(selectCartTotalItems);
+  const { totalItems } = useCartSummary();
 
   return (
     <Tab.Navigator
@@ -42,10 +41,10 @@ export function AppStack() {
             <ShoppingCart color={color} size={size} strokeWidth={1.5} />
           ),
           tabBarBadge: (
-            cartBadgeCount > 0 
-              ? cartBadgeCount > 99 
+            totalItems > 0 
+              ? totalItems > 99 
                 ? '...'
-                : cartBadgeCount
+                : totalItems
               : undefined
           ),
           headerShown: false,

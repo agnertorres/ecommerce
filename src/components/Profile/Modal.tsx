@@ -1,18 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../store';
-
-import { signOut } from '../../store/slices/authSlice';
-import { showModal } from '../../store/slices/profileModalSlice';
-
+import { useAuthStore } from '../../store/useAuthStore';
+import { useProfileModalStore } from '../../store/useProfileModalStore';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
 
 export default function ModalComponent() {
-	const dispatch = useDispatch<AppDispatch>();
-	const { visible } = useSelector((state: RootState) => state.profileModal);
+  const { visible, showModal } = useProfileModalStore();
+  const { signOut } = useAuthStore();
 
 	const handleSignout = () => {
-    dispatch(signOut());
-		dispatch(showModal(false));
+    signOut();
+		showModal(false);
   }
 
 	return (
@@ -31,7 +27,7 @@ export default function ModalComponent() {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={[modalStyles.button, modalStyles.buttonClose]}
-						onPress={() => dispatch(showModal(false))}>
+						onPress={() => showModal(false)}>
 						<Text style={modalStyles.textStyle}>Cancelar</Text>
 					</TouchableOpacity>
 				</View>

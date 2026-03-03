@@ -1,26 +1,27 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store';
 import { useFocusEffect } from '@react-navigation/native';
-
-import { getProductsByCategory, resetProducts } from '../store/slices/productSlice';
-
+import { useProductStore } from '../store/useProductStore';
 import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import ProductItem from '../components/Home/ProductItem';
 
 export default function HomeScreen({ route }) {
-  const dispatch = useDispatch<AppDispatch>();
+  const {
+    items,
+    loading,
+    refreshing,
+    fetchProductsByCategory, 
+    resetProducts,
+  } = useProductStore();
 
-  const { items, loading, refreshing } = useSelector((state: RootState) => state.product);
   const { name } = route;
 
   const fetchProducts = useCallback(() => {
-    dispatch(getProductsByCategory(name));
+    fetchProductsByCategory(name);
 
     return () => {
-      dispatch(resetProducts());
+      resetProducts();
     };
-  }, [dispatch, name]);
+  }, [name]);
 
   useFocusEffect(fetchProducts);
 

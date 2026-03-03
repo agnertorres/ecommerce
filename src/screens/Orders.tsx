@@ -1,25 +1,23 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../store';
-
+import { useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useOrderStore } from '../store/useOrderStore';
 import { 
 	StyleSheet,
 	View,
 	FlatList,
   ActivityIndicator,
 } from 'react-native';
-
-import { getUserOrders } from '../store/slices/orderSlice';
-
 import OrderCard from '../components/Order/OrderCard';
 
 export default function OrdersScreen() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { items, loading, refreshing } = useSelector((state: RootState) => state.order);
-  
-  useEffect(() => {
-    dispatch(getUserOrders());
-  }, [dispatch]);
+  const { items, loading, refreshing, getUserOrders } = useOrderStore();
+
+  const fetchOrders = useCallback(() => {
+    getUserOrders();
+
+  }, [getUserOrders]);
+
+  useFocusEffect(fetchOrders);
 
   if (loading) {
     return (
@@ -32,7 +30,7 @@ export default function OrdersScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        onRefresh={() => { dispatch(getUserOrders()) }}
+        onRefresh={fetchOrders}
         refreshing={refreshing}
         data={items}
         renderItem={({ item }) => <OrderCard { ...item} />}

@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight } from 'lucide-react-native';
@@ -9,7 +7,7 @@ import { ProfileStackParamList } from '../../types/navigation';
 export default function Address() {
   const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
 
-  const { address } = useSelector((state: RootState) => state.user);
+	const address = 'Endereço mockado';
 
   const changeAddress = () => {
 		navigation.navigate('EditProfile', { field: 'address', value: address });

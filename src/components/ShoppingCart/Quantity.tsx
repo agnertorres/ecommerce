@@ -1,9 +1,7 @@
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Trash2 } from "lucide-react-native";
 
-import { addProductQuantity, decreaseProductQuantity } from "../../store/slices/shoppingCartSlice";
+import { useShoppingCartStore } from "../../store/useShoppingCartStore";
 import { darkGray, gray, red } from "../ui/colors";
 
 interface QuantityComponentProps {
@@ -13,14 +11,14 @@ interface QuantityComponentProps {
 }
 
 export default function Quantity ({ quantity, id, stock }: QuantityComponentProps) {
-  const dispatch = useDispatch<AppDispatch>();
+  const { addProductQuantity, decreaseProductQuantity } = useShoppingCartStore();
 
   const addQuantity = () => {
-    dispatch(addProductQuantity(id));
+    addProductQuantity(id);
   }
 
   const decreaseQuantity = () => {
-    dispatch(decreaseProductQuantity(id));
+    decreaseProductQuantity(id);
   }
 
   return (
