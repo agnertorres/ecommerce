@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { ShoppingBag } from 'lucide-react-native';
-import { useCartSummary } from '../store/useShoppingCartStore';
-import Product from '../components/ShoppingCart/Product';
-import Checkout from '../components/ShoppingCart/Checkout';
+import { useCartSummary } from '../../store/useShoppingCartStore';
+import Product from '../../components/ShoppingCart/Product';
+import Checkout from '../../components/ShoppingCart/Checkout';
 
 export default function ShoppingCartScreen() {
   const { products } = useCartSummary();

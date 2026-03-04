@@ -21,7 +21,7 @@ export default function HomeScreen({ route }) {
     return () => {
       resetProducts();
     };
-  }, [name]);
+  }, [name, fetchProductsByCategory]);
 
   useFocusEffect(fetchProducts);
 

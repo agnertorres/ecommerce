@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { darkGray } from './colors';
+import { darkGray } from '../colors';
 
 interface CardProps {
 	style?: Object;

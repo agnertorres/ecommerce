@@ -1,17 +1,31 @@
 export interface User {
-	id?: number,
+	id: string,
 	name: string;
 	cpf: string;
 	nickname: string;
 	email: string;
 	phone: string;
 	password: string;
+	addresses?: Address[];
+}
+
+export interface Address {
+  id: string;
+  city: string;
+  complement?: string;
+  createdAt?: Date;
+  isDefault: boolean;
+  number: string;
+  state: string;
+  street: string;
+  userId: string;
+  zipcode: string;
 }
 
 export interface Product {
-	id: number;
+	id: string;
 	title: string;
-	status: string; //precisa ir para a tabela order_items
+	status: string;
 	image: string;
 	stock: number;
 	price: number;
@@ -26,7 +40,7 @@ export interface Shipping {
 }
 
 export interface Order {
-	id: number;
+	id: string;
 	date: string;
 	paymentMethod: string;
 	paymentStatus: string;
@@ -37,11 +51,6 @@ export interface Order {
 
 export interface Cartitem extends Product {
 	quantity: number;
-}
-
-export interface EditFieldProps { 
-	field: string;
-	value?: string;
 }
 
 export enum CategoryEnum {

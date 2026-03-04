@@ -2,22 +2,22 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MapPin, ChevronRight } from 'lucide-react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ProfileStackParamList } from '../../types/navigation';
+import { HomeStackParamList } from '../../types/navigation';
+import { useDefaultAddress } from "../../store/useUserStore";
 
 export default function Address() {
-  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
-
-	const address = 'Endereço mockado';
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+	const address = useDefaultAddress();
 
   const changeAddress = () => {
-		navigation.navigate('EditProfile', { field: 'address', value: address });
+		navigation.navigate('AddressList');
 	}
 
   return (
     <TouchableOpacity style={styles.addressContainer} onPress={changeAddress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
         <MapPin color={'#fff'} size={21} strokeWidth={1.4} />
-        <Text style={styles.addressText}>{address}</Text>
+        <Text style={styles.addressText}>{`${address?.street}, ${address?.number}`}</Text>
       </View>
       <ChevronRight style={styles.chevronRight} color={'#fff'} size={21} strokeWidth={1.4} />
     </TouchableOpacity>

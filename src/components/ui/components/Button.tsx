@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ColorValue } from 'react-native';
-import { blue, white } from './colors';
+import { blue, white } from '../colors';
 
 interface ButtonProps extends TouchableOpacityProps {
   backgroundColor?: ColorValue;

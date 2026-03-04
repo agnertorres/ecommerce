@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { XIcon } from 'lucide-react-native';
 import { separator, white, gray, lightGray, lightBlack } from '../ui/colors';
-import Button from '../ui/Button';
+import { Button } from '../ui/components';
 
 interface QuantityModalProps {
   modalVisible: boolean;

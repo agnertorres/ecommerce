@@ -2,11 +2,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../types/navigation';
 import { useCartSummary } from '../store/useShoppingCartStore';
 
-import ShoppingCartScreen from '../screens/ShoppingCart';
-import ShippingAddressScreen from '../screens/ShippingAddress';
-import PaymentMethodScreen from '../screens/PaymentMethod';
-import OrderConfirmationScreen from '../screens/OrderConfirmation';
-import CheckoutSuccessScreen from '../screens/CheckoutSuccessScreen';
+import ShoppingCartScreen from '../screens/checkout/ShoppingCart';
+import ShippingAddressScreen from '../screens/checkout/ShippingAddress';
+import PaymentMethodScreen from '../screens/checkout/PaymentMethod';
+import OrderConfirmationScreen from '../screens/checkout/OrderConfirmation';
+import CheckoutSuccessScreen from '../screens/checkout/CheckoutSuccessScreen';
 
 const Stack = createNativeStackNavigator<ShoppingCartStackParamList>();
 

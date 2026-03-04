@@ -4,7 +4,7 @@ import { CreditCard, Truck } from 'lucide-react-native';
 import { formatMoney } from '../../utils';
 import { lightGreen, darkGray, lightGray, white, yellow, red, separator } from '../ui/colors';
 
-import Card from '../ui/Card';
+import { Card } from '../ui/components';
 import ProductList from './ProductList';
 
 type OrderDetailProps = {

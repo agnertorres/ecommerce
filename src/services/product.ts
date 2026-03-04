@@ -19,7 +19,7 @@ export function getProductsByCategory(
   })
 }
 
-export function getProductById(id: number): Promise<{ data: Product | undefined }> {
+export function getProductById(id: string): Promise<{ data: Product | undefined }> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({ data: Products.find((item) => item.id === id) });

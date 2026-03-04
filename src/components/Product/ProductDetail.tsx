@@ -13,13 +13,13 @@ import {
   Alert,
 } from 'react-native';
 import { blue, lightBlue, lightGreen, white, darkGray, gray, lightGray } from '../ui/colors';
-import Button from '../ui/Button';
+import { Button } from '../ui/components';
 import SelectQuantityModal from './SelectQuantityModal';
 import { formatMoney } from '../../utils';
 
 import { useStore } from '../../store';
 
-export default function ProductDetail({ product }: { product: Product}) {
+export default function ProductDetail({ product }: { product: Product }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
 

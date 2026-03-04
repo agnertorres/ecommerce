@@ -3,24 +3,6 @@ import api from '../config/axios';
 
 import { User } from '../types';
 
-type userToken = string;
-
-export function getUserData(userToken: userToken): Promise<User> {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			userToken ? resolve(UserData) : reject('Token inválido');
-    }, 500);
-	})
-}
-
-export function getToken(): Promise<userToken>{
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('token');
-    }, 500);
-  });
-};
-
 interface EditFieldProps {
   id: number;
   field: string;
@@ -56,7 +38,17 @@ export const createUser = async (userData: User) => {
   try {
      const response = await api.post('/users', userData);
      return response.data;
-  } catch(error) {
+  } catch(error:any) {
+      console.error("Erro inesperado:", error?.message);
+      throw new Error("Erro de conexão");
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+     const response = await api.get(`/users/${id}`);
+     return response.data;
+  } catch(error:any) {
       console.error("Erro inesperado:", error?.message);
       throw new Error("Erro de conexão");
   }

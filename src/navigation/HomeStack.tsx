@@ -1,8 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ProductDetailScreen from '../screens/ProductDetail';
+import ProductDetailScreen from '../screens/Product';
 import HomeTabSection from './HomeTabSection';
-import EditProfileScreen from '../screens/EditProfile';
+import AddressListScreen from '../screens/user/AddressList';
+import CreateOrEditAddress from '../screens/user/CreateOrEditAddress';
 
 import { HomeStackParamList } from '../types/navigation';
 
@@ -25,17 +26,28 @@ export default function HomeStack() {
           headerShown: false
         }}
       />
-      <Stack.Screen
-        name="EditProfile"
-        component={EditProfileScreen}
+      <Stack.Screen 
+        name="AddressList" 
+        component={AddressListScreen}
         options={{
-          headerTitle: 'Alterar Endereço',
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
-          headerBackButtonDisplayMode: 'minimal',
-          headerBackVisible: false,
-          headerBackButtonMenuEnabled: false,
-        }}
+            headerTitle: 'Endereços cadastrados',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackButtonMenuEnabled: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="CreateOrEditAddress" 
+        component={CreateOrEditAddress}
+        options={{
+            headerTitle: 'Alterar endereço',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackVisible: false,
+            headerBackButtonMenuEnabled: false,
+        }} 
       />
     </Stack.Navigator>
   );

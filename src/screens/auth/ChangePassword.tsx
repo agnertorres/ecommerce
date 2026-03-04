@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { changePassword } from '../services/user';
+import { changePassword } from '../../services/user';
 
 import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
-import { styles } from '../screens/EditProfile';
+import { styles } from '../user/EditProfile';
 
 export default function ChangePasswordScreen() {
 	const [currentPassword, setcurrentPassword] = useState('');

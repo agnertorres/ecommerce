@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MapPin, ChevronRight } from 'lucide-react-native';
-import { lightBlack, lightGray, lightGreen } from '../components/ui/colors';
-import Card from '../components/ui/Card';
+import { lightBlack, lightGray, lightGreen } from '../../components/ui/colors';
+import { Card } from '../../components/ui/components';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ShoppingCartStackParamList } from '../types/navigation';
+import { ShoppingCartStackParamList } from '../../types/navigation';
 
-import { useCartSummary } from '../store/useShoppingCartStore';
-import { formatMoney } from '../utils';
+import { useCartSummary } from '../../store/useShoppingCartStore';
+import { formatMoney } from '../../utils';
 
 export default function ShippingAddressScreen() {
   const { shipping } = useCartSummary();

@@ -14,3 +14,18 @@ export const darkGray = '#3f3f3f';
 export const lightGray = '#8d8d8d';
 export const separator = '#e7e7e7eb';
 
+export default {
+  white,
+  lightGreen,
+  yellow,
+  red,
+  lightBlue,
+  blue,
+  lightBlack,
+  black,
+  gray,
+  darkGray,
+  lightGray,
+  separator,
+};
+

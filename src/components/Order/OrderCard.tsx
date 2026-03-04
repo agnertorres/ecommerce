@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OrdersStackParamList } from '../../types/navigation';
 
 import ProductList from './ProductList';
-import Card from '../ui/Card';
+import { Card } from '../ui/components';
 
 export default function OrderCard({ id, date, products }: Order) {
 	const navigation = useNavigation<NativeStackNavigationProp<OrdersStackParamList>>();

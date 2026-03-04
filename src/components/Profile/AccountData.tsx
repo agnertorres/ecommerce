@@ -1,25 +1,61 @@
-import { User, EditFieldProps } from '../../types';
-
-import { Phone, Mail, KeyRound } from 'lucide-react-native';
+import { User } from '../../types';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '../../types/navigation';
+import { Phone, Mail, KeyRound, IdCard, MapPin, User as UserIcon } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDefaultAddress, useUserStore } from '../../store/useUserStore';
 
 import LinkButton from './LinkButton';
 
-interface AccountDataProps {
-  user: User | null;
-  editField: ({ field, value }: EditFieldProps) => void;
-}
+export default function AccountData() {
+  const defaultAddress = useDefaultAddress();
+  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
 
-export default function AccountData({ user, editField }: AccountDataProps) {
+  const { user } = useUserStore();
+
   return (
     <View>
+      <Text style={styles.title}>Informações pessoais</Text>
+      <LinkButton
+        iconComponent={<IdCard size={30} strokeWidth={1} />}
+        data={user?.name}
+        description="Nome e sobrenome"
+        onPress={() => {
+          navigation.navigate('EditProfile', { field: 'name', value: user?.name });
+        }}
+      />
+      <LinkButton
+        iconComponent={<IdCard size={30} strokeWidth={1} />}
+        data={user?.cpf}
+        description="Número do CPF"
+        onPress={() => {
+          navigation.navigate('EditProfile', { field: 'cpf', value: user?.cpf });
+        }}
+      />
+      <LinkButton
+        iconComponent={<UserIcon size={30} strokeWidth={1} />}
+        data={user?.nickname}
+        description="Nome de preferência"
+        onPress={() => {
+          navigation.navigate('EditProfile', { field: 'nickname', value: user?.nickname });
+        }}
+      />
+      <LinkButton
+        iconComponent={<MapPin size={30} strokeWidth={1} />}
+        data={`${defaultAddress?.street}, ${defaultAddress?.number}`}
+        description="Endereço de entrega"
+        onPress={() => {
+          navigation.navigate('AddressList');
+        }}
+      />
       <Text style={styles.title}>Dados da conta</Text>
       <LinkButton
         iconComponent={<Mail size={30} strokeWidth={1} />}
         data={user?.email}
         description="E-mail cadastrado"
         onPress={() => {
-          editField({ field: 'email', value: user?.email })
+          navigation.navigate('EditProfile', { field: 'email', value: user?.email });
         }}
       />
       <LinkButton
@@ -27,7 +63,7 @@ export default function AccountData({ user, editField }: AccountDataProps) {
         data={user?.phone}
         description="Número de telefone"
         onPress={() => {
-          editField({ field: 'phone', value: user?.phone })
+          navigation.navigate('EditProfile', { field: 'phone', value: user?.phone });
         }}
       />
       <LinkButton
@@ -35,7 +71,7 @@ export default function AccountData({ user, editField }: AccountDataProps) {
         data="********"
         description="Alterar senha"
         onPress={() => {
-          editField({ field: 'password' })
+          navigation.navigate('ChangePassword');
         }}
       />
     </View>

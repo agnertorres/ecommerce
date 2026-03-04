@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { MapPin, CreditCard, ReceiptText } from 'lucide-react-native';
-import { gray, lightBlack, lightGray, lightGreen, separator } from '../components/ui/colors';
-import Card from '../components/ui/Card';
+import { lightBlack, lightGray, lightGreen, separator } from '../../components/ui/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ShoppingCartStackParamList } from '../types/navigation';
+import { ShoppingCartStackParamList } from '../../types/navigation';
 
-import { useCartSummary } from '../store/useShoppingCartStore';
-import { useStore } from '../store/';
-import { formatMoney } from '../utils';
-import Button from '../components/ui/Button';
+import { useCartSummary } from '../../store/useShoppingCartStore';
+import { useStore } from '../../store';
+import { formatMoney } from '../../utils';
+import { Button, Card } from '../../components/ui/components';
 
 const paymentMethodMap = {
   'pix': 'Pix',

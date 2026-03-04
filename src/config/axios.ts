@@ -11,6 +11,8 @@ const api = axios.create({
 //   async (config) => {
 //     const { token } = useStore.auth();
 
+//     console.log(token);
+
 //     if (token && config.headers) {
 //       config.headers.Authorization = `Bearer ${token}`;
 //     }

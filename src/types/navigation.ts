@@ -26,10 +26,8 @@ export type HomeStackParamList = {
   ProductDetail: {
     id: number,
   },
-  EditProfile: {
-    field: string,
-    value: string,
-  },
+  AddressList: undefined,
+  CreateOrEditAddress: undefined,
 };
 
 export type OrdersStackParamList = {
@@ -51,9 +49,11 @@ export type ProfileStackParamList = {
   Profile: undefined,
   EditProfile: {
     field: string,
-    value: string | null,
+    value?: string,
   },
   ChangePassword: undefined,
+  AddressList: undefined,
+  CreateOrEditAddress: undefined,
 };
 
 //HOME TAB SECTION

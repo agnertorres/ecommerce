@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ProfileScreen from '../screens/Profile';
-import EditProfileScreen from '../screens/EditProfile';
-import ChangePasswordScreen from '../screens/ChangePassword';
+import ProfileScreen from '../screens/user/Profile';
+import EditProfileScreen from '../screens/user/EditProfile';
+import ChangePasswordScreen from '../screens/auth/ChangePassword';
+import CreateOrEditAddress from '../screens/user/CreateOrEditAddress';
+import AddressListScreen from '../screens/user/AddressList';
 
 import { ProfileStackParamList } from '../types/navigation';
 
@@ -35,6 +37,29 @@ export default function ProfileStack() {
         component={ChangePasswordScreen}
         options={{
             headerTitle: 'Alterar',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackVisible: false,
+            headerBackButtonMenuEnabled: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="AddressList" 
+        component={AddressListScreen}
+        options={{
+            headerTitle: 'Endereços cadastrados',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackButtonMenuEnabled: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="CreateOrEditAddress" 
+        component={CreateOrEditAddress}
+        options={{
+            headerTitle: 'Alterar endereço',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: '#007BFF'},
             headerBackButtonDisplayMode: 'minimal',

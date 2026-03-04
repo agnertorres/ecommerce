@@ -1,33 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { EditFieldProps } from '../types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ProfileStackParamList } from '../types/navigation';
+
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useStore } from '../store/';
-
-
-import Modal from '../components/Profile/Modal';
-import PersonalInformation from '../components/Profile/PersonalInformation';
-import AccountData from '../components/Profile/AccountData';
+import { useStore } from '../../store/';
+import Modal from '../../components/Profile/Modal';
+import AccountData from '../../components/Profile/AccountData';
 
 export default function ProfileScreen() {
   const safeAreaInsets = useSafeAreaInsets();
-
-  const { user } = useStore.user();
   const { showModal } = useStore.profileModal();
-
-  const navigation = useNavigation<NativeStackNavigationProp<ProfileStackParamList>>();
-  
-  const editField = ({ field, value }: EditFieldProps) => {
-
-    if (field === 'password') {
-      navigation.navigate('ChangePassword');
-      return;
-    }
-
-    navigation.navigate('EditProfile', { field, value });
-  }
 
   return (
     <View style={styles.container}>
@@ -41,13 +21,10 @@ export default function ProfileScreen() {
         <Text style={styles.headerSubtitle}>joaosilva@gmail.com</Text>
       </View>
       <ScrollView style={styles.content}>
-        <PersonalInformation user={user} editField={editField} />
-        <AccountData user={user} editField={editField} />
-        <View>
-          <TouchableOpacity style={styles.button} onPress={() => showModal(true)}>
-            <Text style={styles.buttonText}>Sair da conta</Text>
-          </TouchableOpacity>
-        </View>
+        <AccountData />
+        <TouchableOpacity style={styles.button} onPress={() => showModal(true)}>
+          <Text style={styles.buttonText}>Sair da conta</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

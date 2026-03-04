@@ -3,7 +3,7 @@ import { ShoppingCartStackParamList } from '../../types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
 import { darkGray, lightGreen, white } from '../ui/colors';
-import Button from '../ui/Button';
+import { Button } from '../ui/components/';
 
 import { useCartSummary } from '../../store/useShoppingCartStore';
 

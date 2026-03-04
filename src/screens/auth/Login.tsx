@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import { AuthStackParamList } from '../types/navigation';
-import { login } from '../services/auth';
-import { saveToken } from '../utils';
+import { AuthStackParamList } from '../../types/navigation';
+import { login } from '../../services/auth';
+import { saveToken } from '../../utils';
 
-import { useStore } from '../store';
+import { useStore } from '../../store';
 
 export default function LoginScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
@@ -31,7 +31,7 @@ export default function LoginScreen() {
     
     try {
       const user = await login(email, password);
-      const token = 'token12345';
+      const token = user.id;
 
       if(user) {
         saveToken(token);

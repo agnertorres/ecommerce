@@ -9,9 +9,9 @@ interface ShoppingCartState {
   error: string | null;
   clearProducts: () => void;
   addProduct: (product: Product, quantity: number) => void;
-  removeProduct: (id: number) => void;
-  addProductQuantity: (id: number) => void;
-  decreaseProductQuantity: (id: number) => void;
+  removeProduct: (id: string) => void;
+  addProductQuantity: (id: string) => void;
+  decreaseProductQuantity: (id: string) => void;
   setPaymentMethod: (method: string) => void;
 }
 

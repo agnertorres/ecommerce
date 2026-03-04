@@ -10,7 +10,7 @@ import { useStore } from '../store';
 const Stack = createNativeStackNavigator();
 
 export function AppNavigator() {
-  const { isLoading, token, isSignout, restoreToken, stopLoading } = useStore.auth();
+  const { isLoading, token, restoreToken, stopLoading } = useStore.auth();
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -38,7 +38,7 @@ export function AppNavigator() {
           <Stack.Screen
             name="Auth"
             component={AuthStack}
-            options={{ animationTypeForReplace: isSignout ? 'pop' : 'push' }}/>
+            options={{ animationTypeForReplace: token ? 'pop' : 'push' }}/>
         ) : (
           <Stack.Screen name="App" component={AppStack} />
         )}
