@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProductDetailScreen from '../screens/Product';
 import HomeTabSection from './HomeTabSection';
 import AddressListScreen from '../screens/user/AddressList';
-import CreateOrEditAddress from '../screens/user/CreateOrEditAddress';
+import CreateOrEditAddressScreen from '../screens/user/CreateOrEditAddress';
 
 import { HomeStackParamList } from '../types/navigation';
 
@@ -39,9 +39,9 @@ export default function HomeStack() {
       />
       <Stack.Screen 
         name="CreateOrEditAddress" 
-        component={CreateOrEditAddress}
+        component={CreateOrEditAddressScreen}
         options={{
-            headerTitle: 'Alterar endereço',
+            headerTitle: 'Endereço',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: '#007BFF'},
             headerBackButtonDisplayMode: 'minimal',

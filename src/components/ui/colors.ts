@@ -2,6 +2,7 @@ export const white = '#fff';
 export const lightGreen = '#00a71f';
 export const yellow = '#d8ae09';
 export const red = '#cd0216';
+export const lightRed = '#f91147';
 
 export const lightBlue = '#d3e8ff';
 export const blue = '#007BFF';

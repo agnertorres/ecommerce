@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ColorValue } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ColorValue, ActivityIndicator } from 'react-native';
 import { blue, white } from '../colors';
 
 interface ButtonProps extends TouchableOpacityProps {
   backgroundColor?: ColorValue;
   textColor?: ColorValue;
+  loading?: boolean;
   children: ReactNode;
   onPress?: () => void;
 }
@@ -12,6 +13,7 @@ interface ButtonProps extends TouchableOpacityProps {
 export default function Button ({
   backgroundColor = blue,
   textColor = white,
+  loading = false,
   children,
   onPress,
   style,
@@ -24,7 +26,7 @@ export default function Button ({
       {...rest}
     >
       <Text style={[styles.buttonText, { color: textColor }]}>
-        {children}
+        { loading ? <ActivityIndicator size="small" color={white} /> : children }
       </Text>
     </TouchableOpacity>
   )

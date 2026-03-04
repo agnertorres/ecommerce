@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileScreen from '../screens/user/Profile';
 import EditProfileScreen from '../screens/user/EditProfile';
 import ChangePasswordScreen from '../screens/auth/ChangePassword';
-import CreateOrEditAddress from '../screens/user/CreateOrEditAddress';
+import CreateOrEditAddressScreen from '../screens/user/CreateOrEditAddress';
 import AddressListScreen from '../screens/user/AddressList';
 
 import { ProfileStackParamList } from '../types/navigation';
@@ -57,9 +57,9 @@ export default function ProfileStack() {
       />
       <Stack.Screen 
         name="CreateOrEditAddress" 
-        component={CreateOrEditAddress}
+        component={CreateOrEditAddressScreen}
         options={{
-            headerTitle: 'Alterar endereço',
+            headerTitle: 'Endereço',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: '#007BFF'},
             headerBackButtonDisplayMode: 'minimal',

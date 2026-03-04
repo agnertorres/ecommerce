@@ -17,7 +17,9 @@ export default function Address() {
     <TouchableOpacity style={styles.addressContainer} onPress={changeAddress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
         <MapPin color={'#fff'} size={21} strokeWidth={1.4} />
-        <Text style={styles.addressText}>{`${address?.street}, ${address?.number}`}</Text>
+        <Text style={styles.addressText}>
+					{address ? `${address?.street}, ${address?.number}` : 'Cadastrar endereço de entrega'}
+				</Text>
       </View>
       <ChevronRight style={styles.chevronRight} color={'#fff'} size={21} strokeWidth={1.4} />
     </TouchableOpacity>

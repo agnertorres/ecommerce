@@ -61,3 +61,5 @@ export enum CategoryEnum {
 	Moda = 'Moda',
 	Beleza = 'Beleza',
 }
+
+export type AddressFormData = Omit<Address, 'id' | 'createdAt' | 'userId'>;
