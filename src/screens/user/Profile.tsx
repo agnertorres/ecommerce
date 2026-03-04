@@ -8,6 +8,7 @@ import AccountData from '../../components/Profile/AccountData';
 export default function ProfileScreen() {
   const safeAreaInsets = useSafeAreaInsets();
   const { showModal } = useStore.profileModal();
+  const { user } = useStore.user();
 
   return (
     <View style={styles.container}>
@@ -17,8 +18,8 @@ export default function ProfileScreen() {
           source={{ uri: 'https://avatars.githubusercontent.com/u/12345678?v=4' }}
           style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 10 }}
         />
-        <Text style={styles.headerTitle}>João da Silva</Text>
-        <Text style={styles.headerSubtitle}>joaosilva@gmail.com</Text>
+        <Text style={styles.headerTitle}>{user.name}</Text>
+        <Text style={styles.headerSubtitle}>{user.email}</Text>
       </View>
       <ScrollView style={styles.content}>
         <AccountData />
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    width: '90%',
+    width: '100%',
+    paddingHorizontal: 15,
   },
   button: {
     paddingVertical: 5,

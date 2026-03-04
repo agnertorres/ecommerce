@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useDefaultAddress, useUserStore } from '../../store/useUserStore';
 
 import LinkButton from './LinkButton';
+import { lightBlack, lightGray, lightRed, yellow } from '../ui/colors';
 
 export default function AccountData() {
   const defaultAddress = useDefaultAddress();
@@ -18,7 +19,7 @@ export default function AccountData() {
     <View>
       <Text style={styles.title}>Informações pessoais</Text>
       <LinkButton
-        iconComponent={<IdCard size={30} strokeWidth={1} />}
+        iconComponent={<IdCard size={30} strokeWidth={1} color={lightBlack} />}
         data={user?.name}
         description="Nome e sobrenome"
         onPress={() => {
@@ -26,7 +27,7 @@ export default function AccountData() {
         }}
       />
       <LinkButton
-        iconComponent={<IdCard size={30} strokeWidth={1} />}
+        iconComponent={<IdCard size={30} strokeWidth={1} color={lightBlack} />}
         data={user?.cpf}
         description="Número do CPF"
         onPress={() => {
@@ -34,7 +35,7 @@ export default function AccountData() {
         }}
       />
       <LinkButton
-        iconComponent={<UserIcon size={30} strokeWidth={1} />}
+        iconComponent={<UserIcon size={30} strokeWidth={1} color={lightBlack} />}
         data={user?.nickname}
         description="Nome de preferência"
         onPress={() => {
@@ -42,8 +43,12 @@ export default function AccountData() {
         }}
       />
       <LinkButton
-        iconComponent={<MapPin size={30} strokeWidth={1} />}
-        data={`${defaultAddress?.street}, ${defaultAddress?.number}`}
+        iconComponent={<MapPin size={30} strokeWidth={1} color={defaultAddress ? lightBlack : yellow} />}
+        data={
+          defaultAddress
+            ? `${defaultAddress?.street}, ${defaultAddress?.number}`
+            : 'Cadastrar endereço'
+        }
         description="Endereço de entrega"
         onPress={() => {
           navigation.navigate('AddressList');
@@ -51,7 +56,7 @@ export default function AccountData() {
       />
       <Text style={styles.title}>Dados da conta</Text>
       <LinkButton
-        iconComponent={<Mail size={30} strokeWidth={1} />}
+        iconComponent={<Mail size={30} strokeWidth={1} color={lightBlack} />}
         data={user?.email}
         description="E-mail cadastrado"
         onPress={() => {
@@ -59,7 +64,7 @@ export default function AccountData() {
         }}
       />
       <LinkButton
-        iconComponent={<Phone size={30} strokeWidth={1} />}
+        iconComponent={<Phone size={30} strokeWidth={1} color={lightBlack} />}
         data={user?.phone}
         description="Número de telefone"
         onPress={() => {
@@ -67,7 +72,7 @@ export default function AccountData() {
         }}
       />
       <LinkButton
-        iconComponent={<KeyRound size={30} strokeWidth={1} />}
+        iconComponent={<KeyRound size={30} strokeWidth={1} color={lightBlack} />}
         data="********"
         description="Alterar senha"
         onPress={() => {

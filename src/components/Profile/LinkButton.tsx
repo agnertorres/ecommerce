@@ -31,8 +31,7 @@ export default function LinkButton({ data, description, iconComponent, onPress }
 
 const styles = StyleSheet.create({
 	linkButton: {
-		paddingVertical: 10,
-		paddingHorizontal: 15,
+		padding: 10,
 	},
 	linkButtonText: {
 		color: '#333',

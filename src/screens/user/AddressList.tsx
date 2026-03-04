@@ -21,7 +21,7 @@ export default function AddressListScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Selecione um endereço para alterar</Text>
+      {addresses.length > 0 && <Text style={styles.title}>Selecione um endereço para alterar</Text>}
       <FlatList
         data={addresses}
         renderItem={({ item }) => <AddressCard address={item} onPress={() => { selectAddress(item.id) }} />}
@@ -37,7 +37,7 @@ export default function AddressListScreen() {
         onPress={() => {
           navigation.navigate('CreateOrEditAddress');
         }}>
-        Adicionar novo endereço
+        Cadastrar novo endereço
       </Button>
     </ScrollView>
    );
