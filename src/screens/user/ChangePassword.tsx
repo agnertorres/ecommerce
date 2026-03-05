@@ -1,64 +1,73 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
-import { changePassword } from '../../services/user';
+import { useStore } from '../../store';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ProfileStackParamList } from '../../types/navigation';
 
 import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
-import { styles } from '../user/EditProfile';
+import { styles } from './EditProfile';
+type ChangePasswordProps = NativeStackScreenProps<ProfileStackParamList, 'CreateOrEditAddress'>;
+
 
 export default function ChangePasswordScreen() {
-	const [currentPassword, setcurrentPassword] = useState('');
-	const [newPassword, setNewPassword] = useState('');
-	const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
-	const [loading, setLoading] = useState(false);
+	const { user, loading, changePassword } = useStore.user();
+	const { signOut } = useStore.auth();
 
-	const navigation = useNavigation();
+	const navigation = useNavigation<NativeStackNavigationProp<ChangePasswordProps>>();
 
-	const handleChangePassword = async () => {
-		if (!currentPassword) {
+	const [formData, setFormData] = useState({
+		currentPassword: '',
+		newPassword: '',
+		newPasswordConfirmation: '',
+	});
+
+	const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+	const validateFields = () => {
+		if (!formData.currentPassword) {
 			Alert.alert('Informe a senha atual');
-			return;
+			return false;
 		}
 
-		if (!newPassword) {
+		if (!formData.newPassword) {
 			Alert.alert('Informe a nova senha');
-			return;
+			return false;
 		}
 
-		if (!newPasswordConfirmation) {
+		if (!formData.newPasswordConfirmation) {
 			Alert.alert('Confirme a nova senha');
-			return;
+			return false;
 		}
 
-		if (newPassword !== newPasswordConfirmation) {
+		if (formData.newPassword !== formData.newPasswordConfirmation) {
 			Alert.alert('Confirmação de senha incorreta');
+			return false;
+		}
+
+		return true;
+	}
+
+	const handleChangePassword = () => {
+		const isValidFields = validateFields();
+
+		if(!isValidFields) {
 			return;
 		}
 
-		setLoading(true);
-		const response = await changePassword({ id: 10, currentPassword, newPassword });
-		setLoading(false);
-
-		Alert.alert('', 'Sua senha foi alterada com sucesso', [{
-			text: 'Fechar',
-		}],
-			{
-				cancelable: false,
-			}
-		);
-
-		if (response.data === 'sucesso') {
-			navigation.goBack();
-		}
+		changePassword(user.id, formData);
+		signOut();
 	}
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Alterar senha</Text>
 			<TextInput
-				value={currentPassword}
-				onChangeText={setcurrentPassword}
+				value={formData.currentPassword}
+				onChangeText={(text) => handleChange('currentPassword', text)}
 				style={styles.input}
 				placeholder={'Senha atual'}
 				autoCapitalize="none"
@@ -68,8 +77,8 @@ export default function ChangePasswordScreen() {
 				editable={!loading}
 			/>
 			<TextInput
-				value={newPassword}
-				onChangeText={setNewPassword}
+				value={formData.newPassword}
+				onChangeText={(text) => handleChange('newPassword', text)}
 				style={styles.input}
 				placeholder={'Nova senha'}
 				autoCapitalize="none"
@@ -78,8 +87,8 @@ export default function ChangePasswordScreen() {
 				editable={!loading}
 			/>
 			<TextInput
-				value={newPasswordConfirmation}
-				onChangeText={setNewPasswordConfirmation}
+				value={formData.newPasswordConfirmation}
+				onChangeText={(text) => handleChange('newPasswordConfirmation', text)}
 				style={styles.input}
 				placeholder={'Confirme a nova senha'}
 				autoCapitalize="none"

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Trash2 } from 'lucide-react-native';
 import { Button } from '../../components/ui/components';
 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert, Switch } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Switch } from 'react-native';
 
 import { ProfileStackParamList } from '../../types/navigation';
 import { blue, darkGray, gray, lightRed } from '../../components/ui/colors';

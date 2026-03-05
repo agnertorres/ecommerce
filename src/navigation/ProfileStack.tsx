@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProfileScreen from '../screens/user/Profile';
 import EditProfileScreen from '../screens/user/EditProfile';
-import ChangePasswordScreen from '../screens/auth/ChangePassword';
+import ChangePasswordScreen from '../screens/user/ChangePassword';
 import CreateOrEditAddressScreen from '../screens/user/CreateOrEditAddress';
 import AddressListScreen from '../screens/user/AddressList';
 

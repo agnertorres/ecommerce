@@ -1,23 +1,19 @@
 import api from '../config/axios';
 
-import { User, AddressFormData } from '../types';
+import { User, AddressFormData, PasswordFormData } from '../types';
 
-interface ChangePasswordProps {
-  id: number;
-  currentPassword: string;
-  newPassword: string;
-}
-
-export function changePassword({ id, currentPassword, newPassword }: ChangePasswordProps): Promise<{ data: String}>{
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ data: 'sucesso' });
-    }, 1000);
-  });
+export const changePassword = async (
+  userId: string,
+  passwordData: PasswordFormData,
+): Promise<User> => {
+  try {
+    const response = await api.patch(`/users/${userId}/changePassword`, passwordData);
+    return response.data;
+  } catch(error:any) {
+    console.error("Erro inesperado:", error?.message);
+    throw new Error("Erro de conexão");
+  }
 };
-
-
-//*******************//
 
 export const createUser = async (userData: User): Promise<User> => {
   try {

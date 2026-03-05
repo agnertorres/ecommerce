@@ -63,3 +63,8 @@ export enum CategoryEnum {
 }
 
 export type AddressFormData = Omit<Address, 'id' | 'createdAt' | 'userId'>;
+
+export interface PasswordFormData {
+	currentPassword: string;
+	newPassword: string;
+}
