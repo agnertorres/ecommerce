@@ -2,77 +2,70 @@ import React, { useState, useEffect } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../../types/navigation';
 import { useNavigation } from '@react-navigation/native';
+import { useStore } from '../../store';
 
 import { KeyboardTypeOptions } from 'react-native';
 
-import { editField } from '../../services/user';
-import { User } from '../../types';
+import { UserFormData } from '../../types';
 
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
 type EditProfileProps = NativeStackScreenProps<ProfileStackParamList, 'EditProfile'>;
 
-const fieldNameMap: User = {
+const fieldNameMap: UserFormData = {
   name: 'Nome e sobrenome',
 	cpf: 'CPF',
 	nickname: 'Nome de preferência',
-	address: 'Endereço',
 	email: 'E-mail',
 	phone: 'Número de telefone',
-	password: 'Senha',
 };
 
-const keyboardType: User = {
+const keyboardType: UserFormData = {
   name: 'default',
 	cpf: 'number-pad',
 	nickname: 'default',
-	address: 'default',
 	email: 'email-address',
 	phone: 'phone-pad',
-	password: 'default',
 };
 
 export default function EditProfileScreen({ route }: EditProfileProps) {
-  const [data, setData] = useState<string | undefined>('');
-  const [loading, setLoading] = useState(false);
+  const [newValue, setNewValue] = useState<string | undefined>('');
   const { field, value } = route.params;
+
+  const { user, loading, updateProfileData } = useStore.user();
 
   const navigation = useNavigation();
 
   const handleEditField = async () => {
-    if (!data) {
-      Alert.alert(`Informe um ${fieldNameMap[field].toLowerCase()}`);
+    if (!newValue) {
+      Alert.alert(`Informe um ${fieldNameMap[field as keyof UserFormData].toLowerCase()}`);
       return;
     }
 
-    if(value === data) {
-      Alert.alert(`Informe um ${fieldNameMap[field].toLowerCase()} diferente do anterior`);
+    if (value === newValue) {
+      Alert.alert(`Informe um ${fieldNameMap[field as keyof UserFormData].toLowerCase()} diferente do anterior`);
       return;
     }
 
-    setLoading(true);
-    const response = await editField({ id: 10, field, value: data });
-    setLoading(false);
-
-    if (response.data === 'sucesso') {
-      navigation.goBack();
-    }
+    const userFormData: Partial<UserFormData> = { [field]: newValue };
+    updateProfileData(user.id, userFormData as UserFormData);
+    navigation.goBack();
   }
 
   useEffect(() => {
-    setData(value);
+    setNewValue(value);
   }, [value]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{fieldNameMap[field]}</Text>
+      <Text style={styles.title}>{fieldNameMap[field as keyof UserFormData]}</Text>
       <TextInput
-        value={data}
-        onChangeText={setData}
+        value={newValue}
+        onChangeText={setNewValue}
         style={styles.input}
-        placeholder={fieldNameMap[field]}
+        placeholder={fieldNameMap[field as keyof UserFormData]}
         autoCapitalize="none"
-        keyboardType={keyboardType[field] as KeyboardTypeOptions}
+        keyboardType={keyboardType[field as keyof UserFormData] as KeyboardTypeOptions}
         maxLength={50}
         autoFocus={true}
         editable={!loading}

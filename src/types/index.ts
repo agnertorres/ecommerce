@@ -68,3 +68,11 @@ export interface PasswordFormData {
 	currentPassword: string;
 	newPassword: string;
 }
+
+export interface UserFormData {
+	name: string;
+	cpf: string;
+	nickname: string;
+	email: string;
+	phone: string;
+}

@@ -1,6 +1,6 @@
 import api from '../config/axios';
 
-import { User, AddressFormData, PasswordFormData } from '../types';
+import { User, AddressFormData, PasswordFormData, UserFormData } from '../types';
 
 export const changePassword = async (
   userId: string,
@@ -10,8 +10,7 @@ export const changePassword = async (
     const response = await api.patch(`/users/${userId}/changePassword`, passwordData);
     return response.data;
   } catch(error:any) {
-    console.error("Erro inesperado:", error?.message);
-    throw new Error("Erro de conexão");
+    throw new Error('Erro de conexão');
   }
 };
 
@@ -20,8 +19,7 @@ export const createUser = async (userData: User): Promise<User> => {
      const response = await api.post('/users', userData);
      return response.data;
   } catch(error:any) {
-      console.error("Erro inesperado:", error?.message);
-      throw new Error("Erro de conexão");
+      throw new Error('Erro de conexão');
   }
 };
 
@@ -30,8 +28,7 @@ export const getUserById = async (userId: string): Promise<User> => {
      const response = await api.get(`/users/${userId}`);
      return response.data;
   } catch(error:any) {
-      console.error("Erro inesperado:", error?.message);
-      throw new Error("Erro de conexão");
+      throw new Error('Erro de conexão');
   }
 };
 
@@ -40,8 +37,7 @@ export const createAddress = async (userId: string, address: AddressFormData): P
      const response = await api.post(`/users/${userId}/address`, address);
      return response.data;
   } catch(error:any) {
-      console.error("Erro inesperado:", error?.message);
-      throw new Error("Erro de conexão");
+      throw new Error('Erro de conexão');
   }
 };
 
@@ -54,8 +50,7 @@ export const updateAddress = async (
      const response = await api.patch(`/users/${userId}/address/${addressId}`, address);
      return response.data;
   } catch(error:any) {
-      console.error("Erro inesperado:", error?.message);
-      throw new Error("Erro de conexão");
+      throw new Error('Erro de conexão');
   }
 };
 
@@ -64,7 +59,15 @@ export const removeAddress = async (userId: string, addressId: string): Promise<
     const response = await api.delete(`/users/${userId}/address/${addressId}`);
     return response.data;
   } catch (error: any) {
-    console.error("Erro ao remover endereço:", error?.message);
-    throw new Error("Não foi possível excluir o endereço");
+    throw new Error('Não foi possível excluir o endereço');
+  }
+};
+
+export const updateProfileData = async (userId: string, userData: UserFormData): Promise<User> => {
+  try {
+    const response = await api.patch(`/users/${userId}`, userData);
+    return response.data;
+  } catch (error: any) {
+    throw new Error('Não foi possível excluir o endereço');
   }
 };

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { User, AddressFormData, PasswordFormData } from '../types';
+import { User, AddressFormData, PasswordFormData, UserFormData } from '../types';
 
-import { getUserById, createAddress, updateAddress, removeAddress, changePassword } from '../services/user';
+import { getUserById, createAddress, updateAddress, removeAddress, changePassword, updateProfileData } from '../services/user';
 
 interface UserState {
   user: User;
@@ -12,6 +12,7 @@ interface UserState {
   editAddress: (id: string, addressId: string, addressData: AddressFormData) => Promise<void>;
   removeAddress: (id: string, addressId: string) => Promise<void>;
   changePassword: (id: string, passwordData: PasswordFormData) => Promise<void>;
+  updateProfileData: (id: string, userData: UserFormData) => Promise<void>;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -46,6 +47,12 @@ export const useUserStore = create<UserState>((set) => ({
     set({ loading: true});
 
     const updatedUser = await changePassword(userId, passwordData);
+    set({ user: updatedUser, loading: false });
+  },
+  updateProfileData: async (userId: string, userData: UserFormData) => {
+    set({ loading: true});
+
+    const updatedUser = await updateProfileData(userId, userData);
     set({ user: updatedUser, loading: false });
   },
 }));
