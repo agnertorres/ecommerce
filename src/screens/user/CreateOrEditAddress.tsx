@@ -58,7 +58,7 @@ export default function CreateOrEditAddressScreen({ route }: CreateOrEditAddress
     Alert.alert(
       "Excluir Endereço",
       address.isDefault 
-        ? "Este é seu endereço padrão. Se excluí-lo, outro será escolhido como principal. Confirmar?" 
+        ? "Este é seu endereço de entrega. Se excluí-lo, outro será escolhido como endereço de entrega. Confirmar?" 
         : "Tem certeza que deseja remover este endereço?",
       [
         { text: "Cancelar", style: "cancel" },

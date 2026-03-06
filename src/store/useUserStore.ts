@@ -1,13 +1,25 @@
 import { create } from 'zustand';
 import { User, AddressFormData, PasswordFormData, UserFormData, PaymentMethod } from '../types';
 import { usePaymentStore } from './usePaymentStore';
+import { useAuthStore } from './useAuthStore';
 
-import { getUserById, createAddress, updateAddress, removeAddress, changePassword, updateProfileData } from '../services/user';
+import {
+  createUser,
+  getUserById,
+  createAddress,
+  updateAddress,
+  removeAddress,
+  changePassword,
+  updateProfileData
+} from '../services/user';
 
 interface UserState {
   user: User;
   loading: boolean;
+  error: string;
+  clearError: () => void;
   setUser: (user: User) => void;
+  createUser: (userFormData: UserFormData) => void;
   fetchUserById: (id: string) => Promise<void>;
   addAddress: (id: string, addressData: AddressFormData) => Promise<void>;
   editAddress: (id: string, addressId: string, addressData: AddressFormData) => Promise<void>;
@@ -19,10 +31,27 @@ interface UserState {
 export const useUserStore = create<UserState>((set) => ({
   loading: false,
   user: {} as User,
+  error: '',
+  clearError: () => set({ error: '' }),
   setUser: (user: User) => {
     const { setPaymentMethods } = usePaymentStore.getState();
     setPaymentMethods(user.paymentMethods as PaymentMethod[]);
     set({ user }) 
+  },
+  createUser: async (userFormData: UserFormData) => {
+    set({ loading: true, error: '' });
+
+    const { setToken } = useAuthStore.getState();
+
+    try {
+      const user = await createUser(userFormData);
+
+      set({ user, loading: false })
+      setToken(user.id);
+    } catch(error: any) {
+      set({ loading: false, error: error.message });
+    }
+
   },
   fetchUserById: async (id: string) => {
     set({ loading: true});

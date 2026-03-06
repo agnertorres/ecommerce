@@ -8,7 +8,6 @@ export const login = async (email: string, password: string) => {
      });
      return response.data;
   } catch(error: any) {
-      console.error("Erro inesperado:", error?.message);
-      throw new Error("Erro de conexão");
+      throw new Error(error.response.data.message || 'Ocorreu um erro inesperado');
   }
 };

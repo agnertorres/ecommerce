@@ -3,20 +3,19 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { AuthStackParamList } from '../../types/navigation';
-import { login } from '../../services/auth';
-import { saveToken } from '../../utils';
+import Error from '../../components/ui/components/Error';
+import { Button } from '../../components/ui/components';
 
 import { useStore } from '../../store';
+import { blue } from '../../components/ui/colors';
 
 export default function LoginScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
-  const { setUser } = useStore.user();
-  const { setToken, signIn } = useStore.auth(); 
+  const { signIn, loading, error, clearError } = useStore.auth(); 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const registerUser = () => {
     navigation.navigate('RegisterUser');
@@ -26,41 +25,24 @@ export default function LoginScreen() {
     if (!email || !password) {
       Alert.alert('Informe o e-mail e senha');
       return;
-    }   
-    setLoading(true);
-    
-    try {
-      const user = await login(email, password);
-      const token = user.id;
-
-      if(user) {
-        saveToken(token);
-        setToken(token);
-
-        setUser(user);
-        signIn(token);
-      }
-      
-      setLoading(false);
-    } catch(e) {
-      Alert.alert('Não foi possível concluir');
-      setLoading(false);
     }
+    signIn(email, password);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Acesso</Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          style={styles.input}
-          placeholder="E-mail"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          autoComplete="email"
-          textContentType="emailAddress"
-        />
+      { error && <Error message={error} onClose={clearError} />}
+      <TextInput
+        value={email}
+        onChangeText={setEmail}
+        style={styles.input}
+        placeholder="E-mail"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        autoComplete="email"
+        textContentType="emailAddress"
+      />
       <TextInput
           value={password}
           onChangeText={setPassword}
@@ -68,20 +50,13 @@ export default function LoginScreen() {
           placeholder="Senha"
           secureTextEntry
       />
-      <TouchableOpacity
-        style={loading ? [styles.button, styles.disabled] : styles.button}
-        onPress={handleSignin}
-        disabled={loading}
-      >
-        <SubmitButtonContent loading={loading}/>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={registerUser}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
+      
+      <Button onPress={handleSignin} loading={loading} style={{ marginTop: 15 }}>
+        Entrar
+      </Button>
+      <Button onPress={registerUser} style={{ marginTop: 15 }}>
+        Cadastrar
+      </Button>
     </View>
   );
 }
@@ -98,13 +73,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15,
   },
   title: {
     fontSize: 20,
     fontWeight: '500',
   },
     input: {
-    width: '80%',
+    width: '100%',
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
@@ -114,9 +90,9 @@ const styles = StyleSheet.create({
     maxWidth: 500
   },
     button: {
-    width: '80%',
+    width: '100%',
     height: 40,
-    backgroundColor: '#007BFF',
+    backgroundColor: blue,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',

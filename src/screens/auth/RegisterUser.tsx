@@ -1,37 +1,35 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-
-import { createUser } from '../../services/user';
-
+import { StyleSheet, Text, View } from 'react-native';
+import { useStore } from '../../store';
+import { Error, Button, TextInput } from '../../components/ui/components';
+ 
 export default function RegisterUserScreen() {
-  const [name, setName] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    nickname: '',
+    email: '',
+    cpf: '',
+    phone: '',
+    password: '',
+  });
+
+  const handleChange = (field: string, value: string | boolean) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const { createUser, loading, error, clearError } = useStore.user();
 
   const handleCreateUser = () => {
-    const userData = {
-      name,
-      nickname,
-      email,
-      cpf,
-      phone,
-      password
-    };
-
-    const data = createUser(userData);
+    createUser(formData);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
+      {error ? <Error message={error} onClose={clearError} /> : ''}
       <TextInput
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
+        value={formData.name}
+        onChangeText={(text) => handleChange('name', text)}
         placeholder="Nome"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -39,18 +37,16 @@ export default function RegisterUserScreen() {
         textContentType="name"
       />
       <TextInput
-        value={nickname}
-        onChangeText={setNickname}
-        style={styles.input}
+        value={formData.nickname}
+        onChangeText={(text) => handleChange('nickname', text)}
         placeholder="Nome de exibição"
         autoCapitalize="none"
         keyboardType="default"
         textContentType="givenName"
       />
       <TextInput
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
+        value={formData.email}
+        onChangeText={(text) => handleChange('email', text)}
         placeholder="E-mail"
         autoCapitalize="none"
         keyboardType="email-address"
@@ -58,45 +54,32 @@ export default function RegisterUserScreen() {
         textContentType="emailAddress"
       />
       <TextInput
-        value={cpf}
-        onChangeText={setCpf}
-        style={styles.input}
+        value={formData.cpf}
+        onChangeText={(text) => handleChange('cpf', text)}
         placeholder="CPF"
         autoCapitalize="none"
         keyboardType="number-pad"
         textContentType="none"
       />
       <TextInput
-        value={phone}
-        onChangeText={setPhone}
-        style={styles.input}
+        value={formData.phone}
+        onChangeText={(text) => handleChange('phone', text)}
         placeholder="Telefone"
         autoCapitalize="none"
         keyboardType="phone-pad"
         textContentType="telephoneNumber"
       />
       <TextInput
-          value={password}
-          onChangeText={setPassword}
-          style={styles.input}
+          value={formData.password}
+          onChangeText={(text) => handleChange('password', text)}
           placeholder="Senha"
           secureTextEntry
       />
-      <TouchableOpacity
-        style={loading ? [styles.button, styles.disabled] : styles.button}
-        onPress={handleCreateUser}
-        disabled={loading}
-      >
-        <SubmitButtonContent loading={loading}/>
-      </TouchableOpacity>
+      <Button loading={loading} onPress={handleCreateUser} style={{ marginTop: 20 }}>
+        Cadastrar
+      </Button>
     </View>
   );
-}
-
-function SubmitButtonContent({ loading }: { loading: boolean}) {
-  if (loading) return <ActivityIndicator size="small" color="#fff" />
-
-  return <Text style={styles.buttonText}>Cadastrar</Text>
 }
 
 const styles = StyleSheet.create({
@@ -105,41 +88,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 15,
   },
   title: {
     fontSize: 20,
     fontWeight: '500',
-  },
-    input: {
-    width: '80%',
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginTop: 10,
-    maxWidth: 500
-  },
-    button: {
-    width: '80%',
-    height: 40,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    maxWidth: 500
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  error: {
-    color: 'red',
-    marginTop: 10,
-  },
-  disabled: {
-    backgroundColor: '#ccc',
   },
 });

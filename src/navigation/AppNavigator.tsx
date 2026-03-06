@@ -10,7 +10,7 @@ import { useStore } from '../store';
 const Stack = createNativeStackNavigator();
 
 export function AppNavigator() {
-  const { isLoading, token, restoreToken, stopLoading } = useStore.auth();
+  const { restoreTokenLoading, token, restoreToken, stopLoading } = useStore.auth();
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -32,7 +32,7 @@ export function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isLoading ? (
+        {restoreTokenLoading ? (
           <Stack.Screen name="Loading" component={Loading} />
         ) : token == null ? (
           <Stack.Screen

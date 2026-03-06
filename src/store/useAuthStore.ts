@@ -1,40 +1,64 @@
 import { create } from 'zustand';
-import { removeToken } from '../utils';
+import { saveToken, removeToken } from '../utils';
 import { useUserStore } from './useUserStore';
+
+import { login } from '../services/auth';
 
 interface AuthState {
   token: string | null;
-  isLoading: boolean;
+  loading: boolean;
+  restoreTokenLoading: boolean;
+  error: string;
+  clearError: () => void; 
   restoreToken: (token: string) => void;
-  signIn: (token: string) => void;
+  signIn: (email: string, password: string) => void;
   signOut: () => void;
   startLoading: () => void;
   stopLoading: () => void;
-  setToken: (token: string | null) => void;
+  setToken: (token: string) => void;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
-  isLoading: true,
-  isSignout: false,
+  loading: false,
+  restoreTokenLoading: true,
+  error: '',
+  clearError: () => set({ error: '' }),
   restoreToken: async (token) => {
-    set({ isLoading: true });
+    set({ restoreTokenLoading: true, error: '' });
     const { fetchUserById } = useUserStore.getState();
 
     try {
       await fetchUserById(token);
-      set({ token, isLoading: false});
-    } catch(err: any) {
-      console.log(err);
-      set({ token: null, isLoading: false});
+      set({ token, restoreTokenLoading: false });
+    } catch(error: any) {
+      set({ token: null, restoreTokenLoading: false, error });
     }
   },
-  signIn: (token) => set({ token, isLoading: false }),
+  signIn: async (email: string, password: string) => {
+    set({ loading: true, error: '' });
+
+    const { setUser } = useUserStore.getState();
+    try {
+      const user = await login(email, password);
+      
+      setUser(user);
+
+      const token = user.id;
+      saveToken(token);
+      set({ token, loading: false });
+    } catch(error: any){
+      set({ loading: false, error: error.message });
+    }
+  },
   signOut: () => {
     removeToken();
     set({ token: null })
   },
-  startLoading: () => set({ isLoading: true }),
-  stopLoading: () => set({ isLoading: false }),
-  setToken: (token) => set({ token }),
+  startLoading: () => set({ restoreTokenLoading: true }),
+  stopLoading: () => set({ restoreTokenLoading: false }),
+  setToken: (token) => {
+    saveToken(token);
+    set({ token }) 
+  },
 }));
