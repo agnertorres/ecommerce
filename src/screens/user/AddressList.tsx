@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useUserAddresses } from '../../store/useUserStore';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

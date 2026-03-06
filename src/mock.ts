@@ -1,4 +1,4 @@
-import { User, Order, CategoryEnum, Product } from './types';
+import { Order, CategoryEnum, Product, PaymentMethodFormData } from './types';
 
 export const Products: Product[] =  [
   {
@@ -372,12 +372,10 @@ export const OrdersData: Order[] = [
 	},
 ];
 
-export const UserData: User = {
-	name: 'João da Silva',
-	cpf: '404.999.423.99-99',
-	nickname: 'João',
-	address: 'Rua padre duarte, 289',
-	email: 'joaosilva@gmail.com',
-	phone: '(11) 99999-9999',
-	password: '********',
-};
+export function getPaymentToken(userId: string, paymentMethodFormData: PaymentMethodFormData): Promise<string> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      paymentMethodFormData && userId ? resolve('token12345') : reject('erro inesperado');
+    }, 1000);
+  });
+}

@@ -5,6 +5,8 @@ import EditProfileScreen from '../screens/user/EditProfile';
 import ChangePasswordScreen from '../screens/user/ChangePassword';
 import CreateOrEditAddressScreen from '../screens/user/CreateOrEditAddress';
 import AddressListScreen from '../screens/user/AddressList';
+import CreditCardListScreen from '../screens/user/CreditCardList';
+import CreateCreditCardScreen from '../screens/user/CreateCreditCard';
 
 import { ProfileStackParamList } from '../types/navigation';
 
@@ -60,6 +62,29 @@ export default function ProfileStack() {
         component={CreateOrEditAddressScreen}
         options={{
             headerTitle: 'Endereço',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackVisible: false,
+            headerBackButtonMenuEnabled: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="CreditCardList" 
+        component={CreditCardListScreen}
+        options={{
+            headerTitle: 'Cartões de crédito',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007BFF'},
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackButtonMenuEnabled: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="CreateCreditCard" 
+        component={CreateCreditCardScreen}
+        options={{
+            headerTitle: 'Cartão de crédito',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: '#007BFF'},
             headerBackButtonDisplayMode: 'minimal',

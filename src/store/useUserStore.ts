@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { User, AddressFormData, PasswordFormData, UserFormData } from '../types';
+import { User, AddressFormData, PasswordFormData, UserFormData, PaymentMethod } from '../types';
+import { usePaymentStore } from './usePaymentStore';
 
 import { getUserById, createAddress, updateAddress, removeAddress, changePassword, updateProfileData } from '../services/user';
 
@@ -18,11 +19,19 @@ interface UserState {
 export const useUserStore = create<UserState>((set) => ({
   loading: false,
   user: {} as User,
-  setUser: (user: User) => set({ user }),
+  setUser: (user: User) => {
+    const { setPaymentMethods } = usePaymentStore.getState();
+    setPaymentMethods(user.paymentMethods as PaymentMethod[]);
+    set({ user }) 
+  },
   fetchUserById: async (id: string) => {
     set({ loading: true});
 
     const user = await getUserById(id);
+
+    const { setPaymentMethods } = usePaymentStore.getState();
+    setPaymentMethods(user.paymentMethods as PaymentMethod[]);
+
     set({ user, loading: false });
   },
   addAddress: async (userId: string, addressData: AddressFormData) => {

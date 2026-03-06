@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react-native';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { lightGray } from '../ui/colors';
+import { lightBlack, lightGray } from '../ui/colors';
 
 interface LinkButtonProps {
 	data?: string;
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	linkButtonText: {
-		color: '#333',
+		color: lightBlack,
 		fontSize: 16,
 	},
 	linkButtonDescription: {
-		color: '#767676',
+		color: lightGray,
 		fontSize: 14,
 	},
 });

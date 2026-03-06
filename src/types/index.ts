@@ -7,6 +7,7 @@ export interface User {
 	phone: string;
 	password: string;
 	addresses?: Address[];
+	paymentMethods? : PaymentMethod[];
 }
 
 export interface Address {
@@ -20,6 +21,15 @@ export interface Address {
   street: string;
   userId: string;
   zipcode: string;
+}
+
+export interface PaymentMethod {
+	id: string;
+	lastFourDigits: string;
+	brand: string;
+	token: string;
+	expirationMonth: string;
+  expirationYear: string;
 }
 
 export interface Product {
@@ -75,4 +85,13 @@ export interface UserFormData {
 	nickname: string;
 	email: string;
 	phone: string;
+}
+
+export interface PaymentMethodFormData {
+	brand: string;
+	creditCardNumber: string;
+	expirationYear: string;
+	expirationMonth: string;
+	cvv: string;
+	name: string;
 }

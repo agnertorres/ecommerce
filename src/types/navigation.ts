@@ -58,6 +58,8 @@ export type ProfileStackParamList = {
   CreateOrEditAddress: {
     id: string,
   },
+  CreditCardList: undefined;
+  CreateCreditCard: undefined;
 };
 
 //HOME TAB SECTION

@@ -2,12 +2,12 @@ import { User } from '../../types';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../../types/navigation';
-import { Phone, Mail, KeyRound, IdCard, MapPin, User as UserIcon } from 'lucide-react-native';
+import { Phone, Mail, KeyRound, IdCard, MapPin, User as UserIcon, CreditCard, Trash2 } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDefaultAddress, useUserStore } from '../../store/useUserStore';
 
 import LinkButton from './LinkButton';
-import { lightBlack, lightGray, lightRed, yellow } from '../ui/colors';
+import { lightBlack, yellow } from '../ui/colors';
 
 export default function AccountData() {
   const defaultAddress = useDefaultAddress();
@@ -71,6 +71,17 @@ export default function AccountData() {
           navigation.navigate('EditProfile', { field: 'phone', value: user?.phone });
         }}
       />
+      <Text style={styles.title}>Formas de pagamento</Text>
+      <LinkButton
+        iconComponent={<CreditCard size={30} strokeWidth={1} color={user.paymentMethods?.length > 0 ? lightBlack : yellow} />}
+        data={'Cartões'}
+        description={user.paymentMethods?.length > 0 ? 'Gerencie seus cartões' : 'Adicionar cartão'}
+        onPress={() => {
+          navigation.navigate('CreditCardList');
+        }}
+      />
+
+      <Text style={styles.title}>Segurança da conta</Text>
       <LinkButton
         iconComponent={<KeyRound size={30} strokeWidth={1} color={lightBlack} />}
         data="********"
