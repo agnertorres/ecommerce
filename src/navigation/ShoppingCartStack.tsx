@@ -7,6 +7,8 @@ import ShippingAddressScreen from '../screens/checkout/ShippingAddress';
 import PaymentMethodScreen from '../screens/checkout/PaymentMethod';
 import OrderConfirmationScreen from '../screens/checkout/OrderConfirmation';
 import CheckoutSuccessScreen from '../screens/checkout/CheckoutSuccessScreen';
+import SelectInstallmentsScreen from '../screens/checkout/SelectInstallments';
+import { blue, white } from '../components/ui/colors';
 
 const Stack = createNativeStackNavigator<ShoppingCartStackParamList>();
 
@@ -20,8 +22,8 @@ export default function ShoppingCartStack() {
         component={ShoppingCartScreen}
         options={{
           headerTitle: `Carrinho (${totalItems})`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue},
           headerBackVisible: false,
         }}
       />
@@ -30,8 +32,8 @@ export default function ShoppingCartStack() {
         component={ShippingAddressScreen}
         options={{
           headerTitle: `Endereço de entrega`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue},
           headerBackButtonDisplayMode: 'minimal',
           headerBackButtonMenuEnabled: false,
         }}
@@ -41,8 +43,19 @@ export default function ShoppingCartStack() {
         component={PaymentMethodScreen}
         options={{
           headerTitle: `Forma da pagamento`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue},
+          headerBackButtonDisplayMode: 'minimal',
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="SelectInstallments"
+        component={SelectInstallmentsScreen}
+        options={{
+          headerTitle: `Parcelamento`,
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue },
           headerBackButtonDisplayMode: 'minimal',
           headerBackButtonMenuEnabled: false,
         }}
@@ -52,8 +65,8 @@ export default function ShoppingCartStack() {
         component={OrderConfirmationScreen}
         options={{
           headerTitle: `Confirmação do pedido`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue },
           headerBackButtonDisplayMode: 'minimal',
           headerBackButtonMenuEnabled: false,
         }}
@@ -62,9 +75,9 @@ export default function ShoppingCartStack() {
         name="CheckoutSuccess"
         component={CheckoutSuccessScreen}
         options={{
-          headerTitle: `Confirmação do pedido`,
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007BFF'},
+          headerTitle: `Pedido confirmado`,
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue },
           headerBackButtonDisplayMode: 'minimal',
           headerBackButtonMenuEnabled: false,
         }}

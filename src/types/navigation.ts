@@ -45,6 +45,7 @@ export type ShoppingCartStackParamList = {
   PaymentMethod: undefined;
   OrderConfirmation: undefined;
   CheckoutSuccess: undefined;
+  SelectInstallments: undefined;
 };
 
 export type ProfileStackParamList = {

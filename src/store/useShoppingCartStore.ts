@@ -1,9 +1,11 @@
 import { create } from 'zustand';
-import { Cartitem, Product } from '../types';
+import { Cartitem, Product, PaymentMethod, Address } from '../types';
 
 interface ShoppingCartState {
   products: Cartitem[];
-  paymentMethod: string | null;
+  paymentMethod: PaymentMethod | { brand: string }
+  shippingAddress: Address;
+  installments: number,
   loading: boolean;
   refreshing: boolean;
   error: string | null;
@@ -12,12 +14,16 @@ interface ShoppingCartState {
   removeProduct: (id: string) => void;
   addProductQuantity: (id: string) => void;
   decreaseProductQuantity: (id: string) => void;
-  setPaymentMethod: (method: string) => void;
+  setPaymentMethod: (method: PaymentMethod | { brand: string }) => void;
+  setShippingAddress: (address: Address) => void;
+  setInstallments: (installments: number) => void;
 }
 
-export const useShoppingCartStore = create<ShoppingCartState>((set, get) => ({
+export const useShoppingCartStore = create<ShoppingCartState>((set) => ({
   products: [],
-  paymentMethod: null,
+  paymentMethod: {} as PaymentMethod,
+  shippingAddress: {} as Address,
+  installments: 1,
   loading: false,
   refreshing: false,
   error: null,
@@ -67,10 +73,12 @@ export const useShoppingCartStore = create<ShoppingCartState>((set, get) => ({
   }),
 
   setPaymentMethod: (method) => set({ paymentMethod: method }),
+  setShippingAddress: (address: Address) => set({ shippingAddress: address }),
+  setInstallments: (installments: number) => set({ installments }),
 }));
 
 export const useCartSummary = () => {
-  const { products, paymentMethod } = useShoppingCartStore();
+  const { products, paymentMethod, shippingAddress, installments } = useShoppingCartStore();
 
   const totalItems = products.reduce((total, item) => total + item.quantity, 0);
   const subtotal = products.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -82,6 +90,8 @@ export const useCartSummary = () => {
     total: subtotal + shipping,
     paymentMethod,
     totalItems,
-    products
+    products,
+    shippingAddress,
+    installments,
   };
 };

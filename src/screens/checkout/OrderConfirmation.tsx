@@ -1,26 +1,25 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { MapPin, CreditCard, ReceiptText } from 'lucide-react-native';
-import { lightBlack, lightGray, lightGreen, separator } from '../../components/ui/colors';
+import { gray, lightBlack, lightGray, lightGreen, separator } from '../../components/ui/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../../types/navigation';
-
+import { Button, Card } from '../../components/ui/components';
 import { useCartSummary } from '../../store/useShoppingCartStore';
 import { useStore } from '../../store';
 import { formatMoney } from '../../utils';
-import { Button, Card } from '../../components/ui/components';
-
-const paymentMethodMap = {
-  'pix': 'Pix',
-  'creditCard': 'Cartão de crédito',
-  'boleto': 'Boleto'
-};
 
 export default function OrderConfirmationScreen() {
   const { user } = useStore.user();
-  const { subtotal, shipping, total, paymentMethod, totalItems } = useCartSummary();
-
-  const address = 'endereco mockado';
+  const {
+    subtotal,
+    shipping,
+    total,
+    paymentMethod,
+    totalItems,
+    shippingAddress,
+    installments,
+  } = useCartSummary();
 
   const freeShipping = shipping === 0;
 
@@ -44,9 +43,28 @@ export default function OrderConfirmationScreen() {
             {freeShipping ? 'Grátis' : formatMoney(shipping)}
           </Text>
         </View>
-        <View style={[styles.line, { borderTopColor: separator, borderTopWidth: .8, paddingTop: 10, } ]}>
-          <Text style={styles.totalPriceText}>Total</Text>
-          <Text style={styles.totalPriceText}>{formatMoney(total)}</Text>
+        <View style={[styles.line, { borderTopColor: separator, borderTopWidth: .8, paddingTop: 15, } ]}>
+          <Text style={styles.subtotalPriceText}>subtotal</Text>
+          <Text style={styles.subtotalPriceText}>{formatMoney(total)}</Text>
+        </View>
+        <View style={[styles.line, { borderTopColor: separator, borderTopWidth: .8, paddingTop: 15, } ]}>
+          <Text style={styles.totalPriceText}>Você pagará</Text>
+          <View style={{ alignItems: 'flex-end'}}>
+            <Text style={styles.totalPriceText}>
+              {
+                paymentMethod.brand === 'pix'
+                  ? formatMoney(total)
+                  : `${installments}x ${formatMoney(total / installments)}`
+              }
+            </Text>
+            <Text style={{ color: lightGray, }}>
+              {
+                paymentMethod.brand === 'pix'
+                  ? paymentMethod.brand
+                  : `${paymentMethod.brand} **** ${paymentMethod.lastFourDigits}`
+              }
+            </Text>
+          </View>
         </View>
         <Button onPress={confirmOrder} style={{ marginTop: 10 }}>
           Confirmar compra
@@ -66,33 +84,48 @@ export default function OrderConfirmationScreen() {
       <Card style={styles.cardDetail}>
         <MapPin size={25} strokeWidth={1} color={lightBlack} />
         <View style={{ gap: 5 }}>
-          <Text style={{ color: lightBlack }}>{address}</Text>
+          <Text style={{ color: lightBlack }}>{`${shippingAddress.street}, ${shippingAddress.number}`}</Text>
           <Text style={{ color: lightGray }}>Endereço de entrega</Text>
         </View>
       </Card>
 
       <Text style={styles.subtitle}>Detalhes do pagamento</Text>
-      <Card style={[styles.cardDetail, { justifyContent: 'space-between' } ]}>
-        <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-          <CreditCard size={25} strokeWidth={1} color={lightBlack} />
-          <View style={{ gap: 5 }}>  
-            <Text>{paymentMethodMap[paymentMethod]}</Text>
-            {
-              paymentMethod === 'creditCard'
-                ? <Text style={{ color: lightGreen, fontSize: 13 }}>{`10x de ${formatMoney(total)} sem juros`}</Text>
-                : <Text style={{ color: lightGray, fontSize: 13 }}>{'a vista'}</Text>
-            }
-          </View>
-        </View>
-        <Text style={{ color: lightBlack }}>{formatMoney(total)}</Text>
-      </Card>
+      {
+        paymentMethod.brand === 'pix'
+        ? (
+          <Card style={[styles.cardDetail, { justifyContent: 'space-between' } ]}>
+            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+              <CreditCard size={25} strokeWidth={1} color={lightBlack} />
+              <View style={{ gap: 4 }}>  
+                <Text>{paymentMethod.brand}</Text>
+                  <Text style={{ color: lightGray, fontSize: 13 }}>{'À vista'}</Text>
+              </View>
+            </View>
+            <Text style={{ color: lightBlack }}>{formatMoney(total)}</Text>
+          </Card>
+        ) : (
+          <Card style={[styles.cardDetail, { justifyContent: 'space-between' } ]}>
+            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+              <CreditCard size={25} strokeWidth={1} color={lightBlack} />
+              <View style={{ gap: 4 }}>  
+                <Text style={{ color: lightBlack }}>
+                  {`${paymentMethod.brand} - Final ${paymentMethod.lastFourDigits}`}
+                </Text>
+                <Text style={{ color: lightGreen, fontSize: 13 }}>
+                  {`${installments}x ${formatMoney(total)} sem juros`}
+                </Text>
+              </View>
+            </View>
+            <Text style={{ color: lightBlack }}>{formatMoney(total)}</Text>
+          </Card>
+        )
+      }
     </ScrollView>
    );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#f7f7f7',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -107,6 +140,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  subtotalPriceText: {
+    color: lightBlack,
   },
   totalPriceText: {
     fontWeight: 500,

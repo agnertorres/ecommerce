@@ -6,35 +6,41 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ShoppingCartStackParamList } from '../../types/navigation';
 import { useUserAddresses } from '../../store/useUserStore';
-import { useCartSummary } from '../../store/useShoppingCartStore';
+import { useCartSummary, useShoppingCartStore } from '../../store/useShoppingCartStore';
 import { formatMoney } from '../../utils';
+import { Address } from '../../types';
 
 export default function ShippingAddressScreen() {
   const addresses = useUserAddresses();
+  const { setShippingAddress } = useShoppingCartStore();
   const navigation = useNavigation<NativeStackNavigationProp<ShoppingCartStackParamList>>();
 
-  const selectAddress = () => {
+  const selectAddress = (address: Address) => {
+    setShippingAddress(address);
     navigation.navigate('PaymentMethod');
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Selecione o endereço de entrega</Text>
+    <View style={styles.container}>
        <FlatList
           data={addresses}
-          renderItem={({ item }) => <AddressCard address={item} onPress={() => { selectAddress(item.id) }} />}
+          ListHeaderComponent={<Text style={styles.title}>Selecione o endereço de entrega</Text>}
+          renderItem={({ item }) => <AddressCard address={item} onPress={() => { selectAddress(item) }} />}
           keyExtractor={item => item.id.toString()}
           numColumns={1}
           contentContainerStyle={{ flexGrow: 0 }}
           style={{ flexGrow: 0, paddingBottom: 5 }}
-          scrollEnabled={false}
-          nestedScrollEnabled={true}
         />
-    </ScrollView>
+    </View>
    );
 }
 
-const AddressCard = ({ onPress, address }) => {
+interface AddressCardProps {
+  onPress: () => void,
+  address: Address,
+}
+
+const AddressCard = ({ onPress, address }: AddressCardProps) => {
   const { shipping } = useCartSummary();
   const freeShipping = shipping === 0;
 
