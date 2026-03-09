@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../store';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ProfileStackParamList } from '../../types/navigation';
+import { Error } from '../../components/ui/components';
 
 import { Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 
@@ -12,7 +14,7 @@ type ChangePasswordProps = NativeStackScreenProps<ProfileStackParamList, 'Create
 
 
 export default function ChangePasswordScreen() {
-	const { user, loading, changePassword } = useStore.user();
+	const { user, loading, changePassword, error, clearError } = useStore.user();
 	const { signOut } = useStore.auth();
 
 	const navigation = useNavigation<NativeStackNavigationProp<ChangePasswordProps>>();
@@ -22,6 +24,12 @@ export default function ChangePasswordScreen() {
 		newPassword: '',
 		newPasswordConfirmation: '',
 	});
+
+	const init = useCallback(() => {
+		return clearError();
+	}, [error]);
+
+	useFocusEffect(init);
 
 	const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -51,19 +59,20 @@ export default function ChangePasswordScreen() {
 		return true;
 	}
 
-	const handleChangePassword = () => {
+	const handleChangePassword = async () => {
 		const isValidFields = validateFields();
 
 		if(!isValidFields) {
 			return;
 		}
 
-		changePassword(user.id, formData);
+		await changePassword(user.id, formData);
 		signOut();
 	}
 
 	return (
 		<View style={styles.container}>
+			{error ? <Error message={error} onClose={clearError} /> : ''}
 			<Text style={styles.title}>Alterar senha</Text>
 			<TextInput
 				value={formData.currentPassword}

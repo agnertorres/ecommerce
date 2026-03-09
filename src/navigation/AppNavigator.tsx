@@ -4,29 +4,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthStack } from './AuthStack';
 import { AppStack } from './AppStack';
 import Loading from '../screens/Loading';
-import { getToken } from '../utils';
 import { useStore } from '../store';
 
 const Stack = createNativeStackNavigator();
 
 export function AppNavigator() {
-  const { restoreTokenLoading, token, restoreToken, stopLoading } = useStore.auth();
+  const { restoreTokenLoading, token, restoreToken } = useStore.auth();
 
   useEffect(() => {
-    const bootstrapAsync = async () => {
-      try {
-        const appToken = await getToken();
-        if (appToken) {
-          restoreToken(appToken);
-        } else {
-          stopLoading();
-        }
-      } catch (e) {
-       stopLoading();
-      }
-    };
-
-    bootstrapAsync();
+    restoreToken();
   }, []);
 
   return (

@@ -14,9 +14,9 @@ export const changePassword = async (
   }
 };
 
-export const createUser = async (user: UserFormData): Promise<User> => {
+export const createUser = async (user: UserFormData): Promise<{user: User, token: string}> => {
   try {
-     const response = await api.post('/users', user);
+     const response = await api.post('/users/register', user);
      return response.data;
   } catch(error: any) {
       throw new Error(error.response.data.message || 'Ocorreu um erro inesperado');

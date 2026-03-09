@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { saveToken, removeToken } from '../utils';
+import { authStorage } from '../utils/authStorage';
 import { useUserStore } from './useUserStore';
 
 import { login } from '../services/auth';
@@ -10,11 +10,9 @@ interface AuthState {
   restoreTokenLoading: boolean;
   error: string;
   clearError: () => void; 
-  restoreToken: (token: string) => void;
+  restoreToken: () => void;
   signIn: (email: string, password: string) => void;
   signOut: () => void;
-  startLoading: () => void;
-  stopLoading: () => void;
   setToken: (token: string) => void;
 }
 
@@ -24,13 +22,21 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   restoreTokenLoading: true,
   error: '',
   clearError: () => set({ error: '' }),
-  restoreToken: async (token) => {
-    set({ restoreTokenLoading: true, error: '' });
-    const { fetchUserById } = useUserStore.getState();
+  restoreToken: async () => {
+    set({ restoreTokenLoading: true });
+    const { fetchUserById } = useUserStore.getState(); 
 
     try {
-      await fetchUserById(token);
-      set({ token, restoreTokenLoading: false });
+      const credentials = await authStorage.getCredentials();
+
+      if (credentials) {
+        set({ token: credentials.token})
+        await fetchUserById(credentials.userId);
+        
+        set({restoreTokenLoading: false });
+      } else {
+        set({ token: null, restoreTokenLoading: false });
+      }
     } catch(error: any) {
       set({ token: null, restoreTokenLoading: false, error });
     }
@@ -40,25 +46,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     const { setUser } = useUserStore.getState();
     try {
-      const user = await login(email, password);
-      
-      setUser(user);
+      const { user, token } = await login(email, password);
 
-      const token = user.id;
-      saveToken(token);
+      setUser(user);
+      authStorage.saveCredentials(user.id, token);
       set({ token, loading: false });
     } catch(error: any){
       set({ loading: false, error: error.message });
     }
   },
   signOut: () => {
-    removeToken();
+    authStorage.deleteCredentials();
     set({ token: null })
   },
-  startLoading: () => set({ restoreTokenLoading: true }),
-  stopLoading: () => set({ restoreTokenLoading: false }),
-  setToken: (token) => {
-    saveToken(token);
-    set({ token }) 
-  },
+  setToken: (token) => set({ token }),
 }));

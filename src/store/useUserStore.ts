@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { User, AddressFormData, PasswordFormData, UserFormData, PaymentMethod } from '../types';
 import { usePaymentStore } from './usePaymentStore';
 import { useAuthStore } from './useAuthStore';
+import { authStorage } from '../utils/authStorage';
 
 import {
   createUser,
@@ -44,14 +45,14 @@ export const useUserStore = create<UserState>((set) => ({
     const { setToken } = useAuthStore.getState();
 
     try {
-      const user = await createUser(userFormData);
+      const { user, token} = await createUser(userFormData);
 
+      authStorage.saveCredentials(user.id, token);
+      setToken(token);
       set({ user, loading: false })
-      setToken(user.id);
     } catch(error: any) {
       set({ loading: false, error: error.message });
     }
-
   },
   fetchUserById: async (id: string) => {
     set({ loading: true});
@@ -84,8 +85,12 @@ export const useUserStore = create<UserState>((set) => ({
   changePassword: async (userId: string, passwordData: PasswordFormData) => {
     set({ loading: true});
 
-    const updatedUser = await changePassword(userId, passwordData);
-    set({ user: updatedUser, loading: false });
+    try {
+      const updatedUser = await changePassword(userId, passwordData);
+      set({ user: updatedUser, loading: false });
+    } catch(error: any) {
+      set({ loading: false, error: error.message });
+    }
   },
   updateProfileData: async (userId: string, userData: UserFormData) => {
     set({ loading: true});
