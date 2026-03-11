@@ -6,6 +6,7 @@ export interface User {
 	email: string;
 	phone: string;
 	password: string;
+	imageUrl: string;
 	addresses?: Address[];
 	paymentMethods? : PaymentMethod[];
 }
@@ -86,6 +87,7 @@ export interface UserFormData {
 	email: string;
 	phone: string;
 	password?: string;
+	imageUrl: string;
 }
 
 export interface PaymentMethodFormData {

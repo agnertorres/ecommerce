@@ -1,23 +1,37 @@
-
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStore } from '../../store/';
 import Modal from '../../components/Profile/Modal';
 import AccountData from '../../components/Profile/AccountData';
+import { Pencil } from 'lucide-react-native';
+import { blue, gray, lightBlue } from '../../components/ui/colors';
+import AvatarModal from '../../components/Profile/AvatarModal';
+import AvatarImage from '../../components/Profile/AvatarImage';
+import { useState } from 'react';
 
 export default function ProfileScreen() {
+  const [visible, setVisible] = useState(false);
   const safeAreaInsets = useSafeAreaInsets();
   const { showModal } = useStore.profileModal();
   const { user } = useStore.user();
 
   return (
     <View style={styles.container}>
+      <AvatarModal
+        visible={visible}
+        setVisible={setVisible}
+      />
       <Modal />
       <View style={[styles.header, { paddingTop: safeAreaInsets.top }]}>
-        <Image
-          source={{ uri: 'https://avatars.githubusercontent.com/u/12345678?v=4' }}
-          style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 10 }}
-        />
+        <View style={styles.avatarContainer}>
+          <AvatarImage
+            uri={user.imageUrl}
+            style={{ width: 80, height: 80, borderRadius: 40, borderWidth: 1.5, borderColor: gray }}
+          />
+        <TouchableOpacity style={styles.changeAvatarButton} onPress={() => setVisible(!visible)}>
+          <Pencil size={16} strokeWidth={2} color={blue}/>
+        </TouchableOpacity>
+        </View>
         <Text style={styles.headerTitle}>{user.name}</Text>
         <Text style={styles.headerSubtitle}>{user.email}</Text>
       </View>
@@ -45,7 +59,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 230,
-    backgroundColor: '#007BFF',
+    backgroundColor: blue,
+  },
+  avatarContainer: {
+    position: 'relative',
+    marginBottom: 10,
+  },
+  changeAvatarButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 25,
+    height: 25,
+    backgroundColor: lightBlue,
+    borderWidth: 1.4,
+    borderColor: blue,
+    borderRadius: 15,
   },
   headerTitle: {
     fontSize: 20,

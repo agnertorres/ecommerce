@@ -1,4 +1,13 @@
 import api from '../config/axios';
+import axios from 'axios';
+
+// const imageApi = axios.create({
+//   baseURL: 'https://image-cdn-be.vercel.app',
+//   timeout: 5000,
+//   headers: {
+//     'Content-Type': 'multipart/form-data',
+//   },
+// });
 
 import { User, AddressFormData, PasswordFormData, UserFormData } from '../types';
 
@@ -66,6 +75,15 @@ export const removeAddress = async (userId: string, addressId: string): Promise<
 export const updateProfileData = async (userId: string, userData: UserFormData): Promise<User> => {
   try {
     const response = await api.patch(`/users/${userId}`, userData);
+    return response.data;
+  } catch(error: any) {
+      throw new Error(error.response.data.message || 'Ocorreu um erro inesperado');
+  }
+};
+
+export const uploadAvatar = async (formData: any): Promise<{url: string, pathname: string}> => {
+  try {
+    const response = await api.post('/avatar/upload', formData);
     return response.data;
   } catch(error: any) {
       throw new Error(error.response.data.message || 'Ocorreu um erro inesperado');

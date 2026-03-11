@@ -11,10 +11,12 @@ import {
   updateAddress,
   removeAddress,
   changePassword,
-  updateProfileData
+  updateProfileData,
+  uploadAvatar,
 } from '../services/user';
 
 interface UserState {
+  avatar: any | null,
   user: User;
   loading: boolean;
   error: string;
@@ -27,11 +29,15 @@ interface UserState {
   removeAddress: (id: string, addressId: string) => Promise<void>;
   changePassword: (id: string, passwordData: PasswordFormData) => Promise<void>;
   updateProfileData: (id: string, userData: UserFormData) => Promise<void>;
+  setAvatar: (image: any | null) => void;
+  clearAvatar: () => void;
+  uploadAvatar: (formData: any) => void;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-  loading: false,
+export const useUserStore = create<UserState>((set, get) => ({
+  avatar: null,
   user: {} as User,
+  loading: false,
   error: '',
   clearError: () => set({ error: '' }),
   setUser: (user: User) => {
@@ -98,6 +104,22 @@ export const useUserStore = create<UserState>((set) => ({
     const updatedUser = await updateProfileData(userId, userData);
     set({ user: updatedUser, loading: false });
   },
+  uploadAvatar: async (formData: any) => {
+    set({ loading: true});
+
+    const { user } = get();
+
+    try {
+      const avatar = await uploadAvatar(formData);
+      const newUser = await updateProfileData(user.id, { imageUrl: avatar.url } as UserFormData);
+
+      set({ user: newUser, loading: false });
+    } catch(error: any){
+      set({ error: error.message || 'Erro inesperado', loading: false })
+    }
+  },
+  setAvatar: (image) => set({ avatar: image }),
+  clearAvatar: () => set({ avatar: null }),
 }));
 
 export const useUserAddresses = () => useUserStore((state) => state.user?.addresses || []);
